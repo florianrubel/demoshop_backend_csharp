@@ -1,6 +1,7 @@
 ﻿using Shared.Constants;
 using Shared.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProductApi.Entities.Products
 {
@@ -10,5 +11,9 @@ namespace ProductApi.Entities.Products
         public string? Name { get; set; }
 
         public int PriceInCents { get; set; }
+
+        [ForeignKey(nameof(ProductId))]
+        public Guid ProductId { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

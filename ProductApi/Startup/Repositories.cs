@@ -9,7 +9,9 @@ namespace ProductApi.Startup
         public static void Register(WebApplicationBuilder builder)
         {
             builder.Services
-                .AddScoped<IBooleanPropertyRepository<BooleanProperty, SearchParameters>, BooleanPropertyRepository>();
+                .AddScoped<IBooleanPropertyRepository<BooleanProperty, SearchParameters>, BooleanPropertyRepository>()
+                .AddScoped<INumericPropertyRepository<NumericProperty, SearchParameters>, NumericPropertyRepository>()
+                .AddScoped<IStringPropertyRepository<StringProperty, SearchParameters>, StringPropertyRepository>();
         }
     }
 }

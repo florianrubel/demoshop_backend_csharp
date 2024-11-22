@@ -10,11 +10,11 @@ namespace ProductApi.Entities.Products
     {
         [ForeignKey(nameof(ProductVariantId))]
         public Guid ProductVariantId { get; set; }
-        public ProductVariant ProductVariant { get; set; }
+        public virtual ProductVariant ProductVariant { get; set; }
 
         [ForeignKey(nameof(StringPropertyId))]
         public Guid StringPropertyId { get; set; }
-        public StringProperty MyProperty { get; set; }
+        public virtual StringProperty MyProperty { get; set; }
 
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string Value { get; set; }

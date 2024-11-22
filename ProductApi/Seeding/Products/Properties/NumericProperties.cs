@@ -1,5 +1,7 @@
-﻿using ProductApi.Entities.Products.Properties;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ProductApi.Entities.Products.Properties;
 using ProductApi.Repositories.Products.Properties;
+using Shared.Models.Api;
 
 namespace ProductApi.Seeding.Products.Properties
 {
@@ -9,7 +11,7 @@ namespace ProductApi.Seeding.Products.Properties
         {
             using (var scope = app.Services.CreateScope())
             {
-                var repository = scope.ServiceProvider.GetService<NumericPropertyRepository>();
+                var repository = scope.ServiceProvider.GetService<INumericPropertyRepository<NumericProperty, SearchParameters>>();
 
                 var properties = new List<NumericProperty>()
                 {

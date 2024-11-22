@@ -1,5 +1,6 @@
 ﻿using ProductApi.Entities.Products.Properties;
 using ProductApi.Repositories.Products.Properties;
+using Shared.Models.Api;
 
 namespace ProductApi.Seeding.Products.Properties
 {
@@ -9,7 +10,7 @@ namespace ProductApi.Seeding.Products.Properties
         {
             using (var scope = app.Services.CreateScope())
             {
-                var repository = scope.ServiceProvider.GetService<BooleanPropertyRepository>();
+                var repository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, SearchParameters>>();
 
                 var properties = new List<BooleanProperty>()
                 {
