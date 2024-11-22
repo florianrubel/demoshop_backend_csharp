@@ -7,7 +7,7 @@ var meta = new OpenApiMeta
 {
     Name = "ProductApi",
     Version = "v1",
-    Description = "Central api for authentication and managing users.",
+    Description = "Central api for managing products.",
     UriTerms = ""
 };
 
@@ -28,7 +28,8 @@ Shared.Startup.Cors.PostBuild(app);
 Shared.Startup.Controllers.PostBuild(app);
 Shared.Startup.Authentication.PostBuild(app);
 
-//ProductApi.Seeding.Identity.Roles.Seed(app).Wait();
-//ProductApi.Seeding.Identity.Users.Seed(app).Wait();
+ProductApi.Seeding.Products.Properties.BooleanProperties.Seed(app).Wait();
+ProductApi.Seeding.Products.Properties.NumericProperties.Seed(app).Wait();
+ProductApi.Seeding.Products.Properties.StringProperties.Seed(app).Wait();
 
 app.Run();
