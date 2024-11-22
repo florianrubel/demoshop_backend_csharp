@@ -3,6 +3,7 @@ using AuthApi.Models.Authentication;
 using AuthApi.StaticServices;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Models.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 

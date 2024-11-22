@@ -1,45 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace Shared.Startup
 {
-    public static class Authentication<DbContextType, UserType, RoleType>
-        where DbContextType : DbContext
-        where UserType : IdentityUser
-        where RoleType : IdentityRole
+    public static class Authentication
     {
         public static void Register(WebApplicationBuilder builder)
         {
-            /**
-             * Configuration for the Microsoft Identity Framework
-             */
-            builder.Services.AddIdentity<UserType, RoleType>()
-                .AddEntityFrameworkStores<DbContextType>()
-                .AddDefaultTokenProviders();
-
-            builder.Services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequiredLength = 8;
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(24);
-                options.Lockout.AllowedForNewUsers = true;
-
-                options.User.RequireUniqueEmail = true;
-
-                options.SignIn.RequireConfirmedAccount = true;
-                options.SignIn.RequireConfirmedEmail = true;
-            });
-
             /**
              * Configuration for the Jwt Authentication
              */

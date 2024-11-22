@@ -1,23 +1,34 @@
+using ProductApi.DbContexts;
+using Shared.Models.OpenApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var meta = new OpenApiMeta
+{
+    Name = "ProductApi",
+    Version = "v1",
+    Description = "Central api for authentication and managing users.",
+    UriTerms = ""
+};
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+Shared.Startup.Configurations.Register(builder);
+Shared.Startup.Database<MainDbContext>.Register(builder, "ProductApi");
+//ProductApi.Startup.Services.Register(builder);
+ProductApi.Startup.Repositories.Register(builder);
+Shared.Startup.Authentication.Register(builder);
+Shared.Startup.Controllers.Register(builder);
+Shared.Startup.OpenApi.Register(builder, meta);
+Shared.Startup.AutoMapping.Register(builder);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+Shared.Startup.Database<MainDbContext>.PostBuild(app);
+Shared.Startup.OpenApi.PostBuild(app, meta);
+Shared.Startup.Cors.PostBuild(app);
+Shared.Startup.Controllers.PostBuild(app);
+Shared.Startup.Authentication.PostBuild(app);
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+//ProductApi.Seeding.Identity.Roles.Seed(app).Wait();
+//ProductApi.Seeding.Identity.Users.Seed(app).Wait();
 
 app.Run();

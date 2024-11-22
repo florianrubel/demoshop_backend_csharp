@@ -1,4 +1,4 @@
-﻿namespace AuthApi.Models.Authentication
+﻿namespace Shared.Models.Authentication
 {
     public class JwtSettings
     {

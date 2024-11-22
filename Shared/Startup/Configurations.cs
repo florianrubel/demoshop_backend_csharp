@@ -1,6 +1,9 @@
-﻿using AuthApi.Models.Authentication;
+﻿
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Shared.Models.Authentication;
 
-namespace AuthApi.Startup
+namespace Shared.Startup
 {
     public static class Configurations
     {
