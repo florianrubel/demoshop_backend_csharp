@@ -2,7 +2,7 @@
 
 namespace SharedProducts.Models.Products.ProductVariant
 {
-    public class ProductVariantSearchParameters : SearchParameters, IProductVariantSearchParameters
+    public class ProductVariantSearchParameters : PaginationParameters, IProductVariantPaginationParameters
     {
         public string? ProductIds { get; set; }
     }

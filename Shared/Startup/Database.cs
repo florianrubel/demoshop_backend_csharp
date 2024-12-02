@@ -43,9 +43,9 @@ namespace Shared.Startup
             {
                 using (DbContextType context = serviceScope.ServiceProvider.GetService<DbContextType>())
                 {
-                    //context.Database.EnsureDeletedAsync().Wait();
+                    context.Database.EnsureDeletedAsync().Wait();
                     context.Database.EnsureCreatedAsync().Wait();
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
                 }
             }
         }

@@ -11,6 +11,8 @@ using ProductCacheApi.Repositories.Products.Properties;
 using Shared.Models.Api;
 using Microsoft.Extensions.Options;
 using ProductCacheApi.Models;
+using Algolia.Search.Clients;
+using SharedProducts.Models.Search;
 
 namespace ProductCacheApi.Cache
 {
@@ -23,7 +25,7 @@ namespace ProductCacheApi.Cache
         private readonly INumericPropertyRepository<NumericProperty, ISearchParameters> _numericPropertyRepository;
         private readonly IStringPropertyRepository<StringProperty, ISearchParameters> _stringPropertyRepository;
         private readonly IProductRepository<Product, ISearchParameters> _productRepository;
-        private readonly IProductVariantRepository<ProductVariant, IProductVariantSearchParameters> _productVariantRepository;
+        private readonly IProductVariantRepository<ProductVariant, IProductVariantPaginationParameters> _productVariantRepository;
         private readonly IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters> _productVariantBooleanPropertyRepository;
         private readonly IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters> _productVariantNumericPropertyRepository;
         private readonly IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters> _productVariantStringPropertyRepository;
@@ -37,7 +39,7 @@ namespace ProductCacheApi.Cache
             INumericPropertyRepository<NumericProperty, ISearchParameters> numericPropertyRepository,
             IStringPropertyRepository<StringProperty, ISearchParameters> stringPropertyRepository,
             IProductRepository<Product, ISearchParameters> productRepository,
-            IProductVariantRepository<ProductVariant, IProductVariantSearchParameters> productVariantRepository,
+            IProductVariantRepository<ProductVariant, IProductVariantPaginationParameters> productVariantRepository,
             IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters> productVariantBooleanPropertyRepository,
             IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters> productVariantNumericPropertyRepository,
             IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters> productVariantStringPropertyRepository
@@ -330,15 +332,7 @@ namespace ProductCacheApi.Cache
             IEnumerable<ProductVariantStringProperty> productVariantStringProperties
         )
         {
-            var collectionName = "products";
-            var db = _mongoClient.GetDatabase("productCache");
-
-            if (!(await db.ListCollectionNamesAsync()).ToList().Any(x => x == collectionName))
-            {
-                await db.CreateCollectionAsync(collectionName);
-            }
-
-            var collection = db.GetCollection<ProductCacheItem>(collectionName);
+            var client = new SearchClient(_algoliaSettings.Value.ApplicationId, _algoliaSettings.Value.WriteApiKey);
 
             var counter = 0;
             foreach (var productVariant in productVariants)
@@ -346,12 +340,12 @@ namespace ProductCacheApi.Cache
                 var product = products.FirstOrDefault(x => x.Id == productVariant.ProductId);
                 if (product == null) continue;
 
-                var item = new ProductCacheItem
+                var item = new ProductSearchItem
                 {
                     Id = productVariant.Id,
                     ProductId = product.Id,
                     Name = product.Name,
-                    Description = product.Description,
+                    Description = product.DescriptionLocalized,
                     ListPicture = product.ListPicture,
                     Pictures = product.Pictures,
                     PriceInCents = productVariant.PriceInCents
@@ -376,14 +370,7 @@ namespace ProductCacheApi.Cache
                     item.StringProperties.Add(property.Name, productVariantStringProperty.Value);
                 }
 
-                await collection.ReplaceOneAsync(
-                    Builders<ProductCacheItem>.Filter.Eq(x => x.Id, item.Id),
-                    item,
-                    new ReplaceOptions
-                    {
-                        IsUpsert = true,
-                    }
-                );
+                await client.AddOrUpdateObjectAsync(_algoliaSettings.Value.IndexName, item.Id.ToString(), item);
 
                 counter++;
 

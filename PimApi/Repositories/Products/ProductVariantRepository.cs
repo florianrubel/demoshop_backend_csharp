@@ -9,21 +9,14 @@ using Shared.StaticServices;
 namespace PimApi.Repositories.Products
 {
     public class ProductVariantRepository
-        : Shared.Repositories.UuidBaseRepository<MainDbContext, ProductVariant, IProductVariantSearchParameters>
-        , IProductVariantRepository<ProductVariant, IProductVariantSearchParameters>
+        : Shared.Repositories.UuidBaseRepository<MainDbContext, ProductVariant, IProductVariantPaginationParameters>
+        , IProductVariantRepository<ProductVariant, IProductVariantPaginationParameters>
     {
         public ProductVariantRepository(MainDbContext context) : base(context) { }
 
-        public async override Task<PagedList<ProductVariant>> GetMultiple(IProductVariantSearchParameters parameters)
+        public async override Task<PagedList<ProductVariant>> GetMultiple(IProductVariantPaginationParameters parameters)
         {
             var collection = _dbSet as IQueryable<ProductVariant>;
-
-            if (parameters.SearchQuery != null && parameters.SearchQuery.Length >= InputSizes.DEFAULT_TEXT_MIN_LENGTH)
-            {
-                collection = collection.Where(r =>
-                    (r.Name != null && r.Name.Contains(parameters.SearchQuery))
-                );
-            }
 
             if (parameters.ProductIds != null)
             {

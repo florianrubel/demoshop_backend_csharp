@@ -24,6 +24,7 @@ namespace PimApi.Migrations
                 .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "hstore");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("SharedProducts.Entities.Products.Product", b =>
@@ -38,10 +39,9 @@ namespace PimApi.Migrations
                     b.Property<int>("DefaultPriceInCents")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Description")
+                    b.Property<Dictionary<string, string>>("DescriptionLocalized")
                         .IsRequired()
-                        .HasMaxLength(20000)
-                        .HasColumnType("character varying(20000)");
+                        .HasColumnType("hstore");
 
                     b.Property<string>("ListPicture")
                         .IsRequired()
@@ -72,10 +72,6 @@ namespace PimApi.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
 
                     b.Property<int>("PriceInCents")
                         .HasColumnType("integer");

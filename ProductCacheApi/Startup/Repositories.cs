@@ -19,7 +19,7 @@ namespace ProductCacheApi.Startup
                 .AddScoped<INumericPropertyRepository<NumericProperty, ISearchParameters>, NumericPropertyRepository>()
                 .AddScoped<IStringPropertyRepository<StringProperty, ISearchParameters>, StringPropertyRepository>()
                 .AddScoped<IProductRepository<Product, ISearchParameters>, ProductRepository>()
-                .AddScoped<IProductVariantRepository<ProductVariant, IProductVariantSearchParameters>, ProductVariantRepository>()
+                .AddScoped<IProductVariantRepository<ProductVariant, IProductVariantPaginationParameters>, ProductVariantRepository>()
                 .AddScoped<IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters>, ProductVariantBooleanPropertyRepository>()
                 .AddScoped<IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters>, ProductVariantNumericPropertyRepository>()
                 .AddScoped<IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters>, ProductVariantStringPropertyRepository>();

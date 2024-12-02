@@ -22,7 +22,7 @@ namespace ProductCacheApi.Repositories.Products
                     (r.Name != null && r.Name.Contains(parameters.SearchQuery))
                 );
                 collection = collection.Where(r =>
-                    (r.Description != null && r.Description.Contains(parameters.SearchQuery))
+                    (r.DescriptionLocalized != null && r.DescriptionLocalized.Values.Contains(parameters.SearchQuery))
                 );
             }
 

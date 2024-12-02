@@ -9,8 +9,7 @@ namespace SharedProducts.Entities.Products
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string Name { get; set; }
 
-        [MaxLength(InputSizes.MULTILINE_TEXT_MAX_LENGTH)]
-        public string Description { get; set; }
+        public Dictionary<string, string> DescriptionLocalized { get; set; }
 
         public string ListPicture { get; set; }
 

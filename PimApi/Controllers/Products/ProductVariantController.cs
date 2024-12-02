@@ -10,9 +10,9 @@ namespace PimApi.Controllers.Products
 {
     [Route("product-variants")]
     [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class ProductVariantController : DefaultControllerTemplate<ProductVariant, ViewProductVariant, CreateProductVariant, PatchProductVariant, IProductVariantSearchParameters>
+    public class ProductVariantController : DefaultControllerTemplate<ProductVariant, ViewProductVariant, CreateProductVariant, PatchProductVariant, IProductVariantPaginationParameters>
     {
-        public ProductVariantController(IMapper mapper, IProductVariantRepository<ProductVariant, IProductVariantSearchParameters> repository) : base(mapper, repository)
+        public ProductVariantController(IMapper mapper, IProductVariantRepository<ProductVariant, IProductVariantPaginationParameters> repository) : base(mapper, repository)
         {
         }
     }

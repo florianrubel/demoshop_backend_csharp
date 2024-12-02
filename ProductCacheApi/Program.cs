@@ -13,7 +13,7 @@ var meta = new OpenApiMeta
     UriTerms = ""
 };
 
-Shared.Startup.Configurations.Register(builder);
+ProductCacheApi.Startup.Configurations.Register(builder);
 Shared.Startup.Database<ReadOnlyDbContext>.Register(builder, assemblyName);
 //ProductApi.Startup.Services.Register(builder);
 ProductCacheApi.Startup.Repositories.Register(builder);
@@ -32,5 +32,11 @@ Shared.Startup.Controllers.PostBuild(app);
 Shared.Startup.Authentication.PostBuild(app);
 
 ProductCacheApi.Seeding.ProductCache.Seed(app).Wait();
+
+var lifetime = app.Lifetime;
+lifetime.ApplicationStopping.Register(() =>
+{
+    ProductCacheApi.Seeding.ProductCache.UnSeed(app).Wait();
+});
 
 app.Run();

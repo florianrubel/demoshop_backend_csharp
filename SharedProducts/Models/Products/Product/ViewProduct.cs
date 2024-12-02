@@ -6,7 +6,7 @@ namespace SharedProducts.Models.Products.Product
     {
         public string Name { get; set; }
 
-        public string Description { get; set; }
+        public Dictionary<string, string> Description { get; set; }
 
         public string ListPicture { get; set; }
 

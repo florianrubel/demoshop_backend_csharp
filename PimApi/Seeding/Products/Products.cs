@@ -10,7 +10,7 @@ namespace PimApi.Seeding.Products
     {
         public string product_name { get; set; }
 
-        public string description { get; set; }
+        public Dictionary<string, string> description { get; set; }
     }
     public static class Products
     {
@@ -36,13 +36,13 @@ namespace PimApi.Seeding.Products
 
                     for (var i = 0; i < 100; i++)
                     {
-                        var completionName = await client.CompleteChatAsync("give me a product name and description for a shirt as json with the keys product_name and description without using the words T-shirt, shirt, top or tee");
+                        var completionName = await client.CompleteChatAsync("give me a product name and description for a shirt as json with the keys product_name and description without using the words T-shirt, shirt, top or tee. Translate the descriptions in the languages en-US, de-DE, it-IT, fr-FR, es-ES and and store it in description in the format { \"en-US\": \"localized description\" }");
                         var gptJson = completionName.Value.Content[0].Text;
                         var answer = JsonSerializer.Deserialize<ChatGPTAnswer>(gptJson);
                         var product = new Product
                         {
                             Name = answer.product_name, //.Replace(" T-Shirt", "").Replace(" t-Shirt", "").Replace(" T-shirt", "").Replace(" Tee", "").Replace(" Shirt", ""),
-                            Description = answer.description,
+                            DescriptionLocalized = answer.description,
                             DefaultPriceInCents = random.Next(1000, 100000),
                             ListPicture = "https://picsum.photos/300/300",
                             Pictures = new List<string>
@@ -57,7 +57,7 @@ namespace PimApi.Seeding.Products
                         products.Add(product);
                         Console.WriteLine("#############################");
                         Console.WriteLine($"{i}:{product.Name}");
-                        Console.WriteLine($"{i}:{product.Description}");
+                        Console.WriteLine($"{i}:{product.DescriptionLocalized}");
                         Console.WriteLine("#############################");
                     }
                 }

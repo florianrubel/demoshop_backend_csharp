@@ -62,7 +62,7 @@ namespace PimApi.Seeding.Products
                     { "3xl", 102 },
                 };
                 var productRepository = scope.ServiceProvider.GetService<IProductRepository<Product, ISearchParameters>>();
-                var productVariantRepository = scope.ServiceProvider.GetService<IProductVariantRepository<ProductVariant, IProductVariantSearchParameters>>();
+                var productVariantRepository = scope.ServiceProvider.GetService<IProductVariantRepository<ProductVariant, IProductVariantPaginationParameters>>();
                 var booleanPropertyRepository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, ISearchParameters>>();
                 var numericPropertyRepository = scope.ServiceProvider.GetService<INumericPropertyRepository<NumericProperty, ISearchParameters>>();
                 var stringPropertyRepository = scope.ServiceProvider.GetService<IStringPropertyRepository<StringProperty, ISearchParameters>>();
