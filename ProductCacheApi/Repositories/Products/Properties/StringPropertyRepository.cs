@@ -7,12 +7,12 @@ using Shared.Models.Api;
 namespace ProductCacheApi.Repositories.Products.Properties
 {
     public class StringPropertyRepository
-        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, StringProperty, SearchParameters>
-        , IStringPropertyRepository<StringProperty, SearchParameters>
+        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, StringProperty, ISearchParameters>
+        , IStringPropertyRepository<StringProperty, ISearchParameters>
     {
         public StringPropertyRepository(ReadOnlyDbContext context) : base(context) { }
 
-        public async override Task<PagedList<StringProperty>> GetMultiple(SearchParameters parameters)
+        public async override Task<PagedList<StringProperty>> GetMultiple(ISearchParameters parameters)
         {
             var collection = _dbSet as IQueryable<StringProperty>;
 

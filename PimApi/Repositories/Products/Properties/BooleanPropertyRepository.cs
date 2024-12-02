@@ -7,12 +7,12 @@ using Shared.Models.Api;
 namespace PimApi.Repositories.Products.Properties
 {
     public class BooleanPropertyRepository
-        : Shared.Repositories.UuidBaseRepository<MainDbContext, BooleanProperty, SearchParameters>
-        , IBooleanPropertyRepository<BooleanProperty, SearchParameters>
+        : Shared.Repositories.UuidBaseRepository<MainDbContext, BooleanProperty, ISearchParameters>
+        , IBooleanPropertyRepository<BooleanProperty, ISearchParameters>
     {
         public BooleanPropertyRepository(MainDbContext context) : base(context) { }
 
-        public async override Task<PagedList<BooleanProperty>> GetMultiple(SearchParameters parameters)
+        public async override Task<PagedList<BooleanProperty>> GetMultiple(ISearchParameters parameters)
         {
             var collection = _dbSet as IQueryable<BooleanProperty>;
 

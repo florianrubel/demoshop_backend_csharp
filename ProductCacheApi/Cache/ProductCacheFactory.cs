@@ -9,37 +9,42 @@ using SharedProducts.Models.Products.ProductVariantStringProperty;
 using ProductCacheApi.Repositories.Products;
 using ProductCacheApi.Repositories.Products.Properties;
 using Shared.Models.Api;
+using Microsoft.Extensions.Options;
+using ProductCacheApi.Models;
 
 namespace ProductCacheApi.Cache
 {
     public class ProductCacheFactory : IProductCacheFactory
     {
         private readonly IConfiguration _configuration;
+        private readonly IOptions<AlgoliaSettings> _algoliaSettings;
         private readonly IMongoClient _mongoClient;
-        private readonly IBooleanPropertyRepository<BooleanProperty, SearchParameters> _booleanPropertyRepository;
-        private readonly INumericPropertyRepository<NumericProperty, SearchParameters> _numericPropertyRepository;
-        private readonly IStringPropertyRepository<StringProperty, SearchParameters> _stringPropertyRepository;
-        private readonly IProductRepository<Product, SearchParameters> _productRepository;
-        private readonly IProductVariantRepository<ProductVariant, ProductVariantSearchParameters> _productVariantRepository;
-        private readonly IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters> _productVariantBooleanPropertyRepository;
-        private readonly IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, ProductVariantNumericPropertyPaginationParameters> _productVariantNumericPropertyRepository;
-        private readonly IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters> _productVariantStringPropertyRepository;
+        private readonly IBooleanPropertyRepository<BooleanProperty, ISearchParameters> _booleanPropertyRepository;
+        private readonly INumericPropertyRepository<NumericProperty, ISearchParameters> _numericPropertyRepository;
+        private readonly IStringPropertyRepository<StringProperty, ISearchParameters> _stringPropertyRepository;
+        private readonly IProductRepository<Product, ISearchParameters> _productRepository;
+        private readonly IProductVariantRepository<ProductVariant, IProductVariantSearchParameters> _productVariantRepository;
+        private readonly IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters> _productVariantBooleanPropertyRepository;
+        private readonly IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters> _productVariantNumericPropertyRepository;
+        private readonly IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters> _productVariantStringPropertyRepository;
 
         private readonly SearchParameters defaultSearchParameters = new SearchParameters { PageSize = -1 };
 
         public ProductCacheFactory(
             IConfiguration configuration,
-            IBooleanPropertyRepository<BooleanProperty, SearchParameters> booleanPropertyRepository,
-            INumericPropertyRepository<NumericProperty, SearchParameters> numericPropertyRepository,
-            IStringPropertyRepository<StringProperty, SearchParameters> stringPropertyRepository,
-            IProductRepository<Product, SearchParameters> productRepository,
-            IProductVariantRepository<ProductVariant, ProductVariantSearchParameters> productVariantRepository,
-            IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters> productVariantBooleanPropertyRepository,
-            IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, ProductVariantNumericPropertyPaginationParameters> productVariantNumericPropertyRepository,
-            IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters> productVariantStringPropertyRepository
+            IOptions<AlgoliaSettings> algoliaSettings,
+            IBooleanPropertyRepository<BooleanProperty, ISearchParameters> booleanPropertyRepository,
+            INumericPropertyRepository<NumericProperty, ISearchParameters> numericPropertyRepository,
+            IStringPropertyRepository<StringProperty, ISearchParameters> stringPropertyRepository,
+            IProductRepository<Product, ISearchParameters> productRepository,
+            IProductVariantRepository<ProductVariant, IProductVariantSearchParameters> productVariantRepository,
+            IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters> productVariantBooleanPropertyRepository,
+            IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters> productVariantNumericPropertyRepository,
+            IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters> productVariantStringPropertyRepository
         )
         {
             _configuration = configuration;
+            _algoliaSettings = algoliaSettings;
             _booleanPropertyRepository = booleanPropertyRepository;
             _numericPropertyRepository = numericPropertyRepository;
             _stringPropertyRepository = stringPropertyRepository;

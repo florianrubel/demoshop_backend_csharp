@@ -2,7 +2,7 @@
 
 namespace SharedProducts.Models.Products.ProductVariantBooleanProperty
 {
-    public class ProductVariantBooleanPropertyPaginationParameters : PaginationParameters
+    public class ProductVariantBooleanPropertyPaginationParameters : PaginationParameters, IProductVariantBooleanPropertyPaginationParameters
     {
         public string? ProductVariantIds { get; set; }
 

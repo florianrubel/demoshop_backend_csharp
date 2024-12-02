@@ -14,7 +14,7 @@ namespace Shared.Startup
             builder.Services.AddDbContext<DbContextType>(options =>
             {
                 options
-                    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), options =>
+                    .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), options =>
                     {
                         options.MigrationsAssembly(assemblyName);
                     })
@@ -43,7 +43,8 @@ namespace Shared.Startup
             {
                 using (DbContextType context = serviceScope.ServiceProvider.GetService<DbContextType>())
                 {
-                    context.Database.EnsureDeleted();
+                    //context.Database.EnsureDeletedAsync().Wait();
+                    context.Database.EnsureCreatedAsync().Wait();
                     context.Database.Migrate();
                 }
             }

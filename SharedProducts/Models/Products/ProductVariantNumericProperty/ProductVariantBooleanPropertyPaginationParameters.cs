@@ -2,7 +2,7 @@
 
 namespace SharedProducts.Models.Products.ProductVariantNumericProperty
 {
-    public class ProductVariantNumericPropertyPaginationParameters : PaginationParameters
+    public class ProductVariantNumericPropertyPaginationParameters : PaginationParameters, IProductVariantNumericPropertyPaginationParameters
     {
         public string? ProductVariantIds { get; set; }
 

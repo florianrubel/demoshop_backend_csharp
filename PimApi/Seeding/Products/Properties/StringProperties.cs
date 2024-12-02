@@ -13,7 +13,7 @@ namespace PimApi.Seeding.Products.Properties
         {
             using (var scope = app.Services.CreateScope())
             {
-                var repository = scope.ServiceProvider.GetService<IStringPropertyRepository<StringProperty, SearchParameters>>();
+                var repository = scope.ServiceProvider.GetService<IStringPropertyRepository<StringProperty, ISearchParameters>>();
 
                 var properties = new List<StringProperty>();
 

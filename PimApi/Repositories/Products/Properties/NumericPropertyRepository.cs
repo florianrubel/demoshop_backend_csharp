@@ -7,12 +7,12 @@ using Shared.Models.Api;
 namespace PimApi.Repositories.Products.Properties
 {
     public class NumericPropertyRepository
-        : Shared.Repositories.UuidBaseRepository<MainDbContext, NumericProperty, SearchParameters>
-        , INumericPropertyRepository<NumericProperty, SearchParameters>
+        : Shared.Repositories.UuidBaseRepository<MainDbContext, NumericProperty, ISearchParameters>
+        , INumericPropertyRepository<NumericProperty, ISearchParameters>
     {
         public NumericPropertyRepository(MainDbContext context) : base(context) { }
 
-        public async override Task<PagedList<NumericProperty>> GetMultiple(SearchParameters parameters)
+        public async override Task<PagedList<NumericProperty>> GetMultiple(ISearchParameters parameters)
         {
             var collection = _dbSet as IQueryable<NumericProperty>;
 

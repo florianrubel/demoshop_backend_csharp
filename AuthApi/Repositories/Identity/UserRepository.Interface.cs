@@ -10,8 +10,8 @@ namespace AuthApi.Repositories.Identity
         Task<IdentityResult> ConfirmEmail(User user, string token);
         Task<IdentityResult> Create(User user, string plainPassword);
         Task<string> GetEmailConfirmationToken(User user);
-        Task<IEnumerable<User>> GetMultiple(IEnumerable<string> userIds, ShapingWithOrderingParameters parameters);
-        Task<PagedList<User>> GetMultiple(SearchParameters parameters);
+        Task<IEnumerable<User>> GetMultiple(IEnumerable<string> userIds, IShapingWithOrderingParameters parameters);
+        Task<PagedList<User>> GetMultiple(ISearchParameters parameters);
         Task<User?> GetOneOrDefault(string id);
         Task<User?> GetOneOrDefaultByName(string username);
         Task<string> GetPasswordResetToken(User user);

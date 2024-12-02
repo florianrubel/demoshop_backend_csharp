@@ -2,7 +2,7 @@
 
 namespace SharedProducts.Models.Products.ProductVariantStringProperty
 {
-    public class ProductVariantStringPropertySearchParameters : SearchParameters
+    public class ProductVariantStringPropertySearchParameters : SearchParameters, IProductVariantStringPropertySearchParameters
     {
         public string? ProductVariantIds { get; set; }
 

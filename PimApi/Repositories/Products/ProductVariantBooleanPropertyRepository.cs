@@ -8,12 +8,12 @@ using Shared.StaticServices;
 namespace PimApi.Repositories.Products
 {
     public class ProductVariantBooleanPropertyRepository
-        : Shared.Repositories.UuidBaseRepository<MainDbContext, ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters>
-        , IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters>
+        : Shared.Repositories.UuidBaseRepository<MainDbContext, ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters>
+        , IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters>
     {
         public ProductVariantBooleanPropertyRepository(MainDbContext context) : base(context) { }
 
-        public async override Task<PagedList<ProductVariantBooleanProperty>> GetMultiple(ProductVariantBooleanPropertyPaginationParameters parameters)
+        public async override Task<PagedList<ProductVariantBooleanProperty>> GetMultiple(IProductVariantBooleanPropertyPaginationParameters parameters)
         {
             var collection = _dbSet as IQueryable<ProductVariantBooleanProperty>;
 

@@ -61,14 +61,14 @@ namespace PimApi.Seeding.Products
                     { "xxl", 98 },
                     { "3xl", 102 },
                 };
-                var productRepository = scope.ServiceProvider.GetService<IProductRepository<Product, SearchParameters>>();
-                var productVariantRepository = scope.ServiceProvider.GetService<IProductVariantRepository<ProductVariant, ProductVariantSearchParameters>>();
-                var booleanPropertyRepository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, SearchParameters>>();
-                var numericPropertyRepository = scope.ServiceProvider.GetService<INumericPropertyRepository<NumericProperty, SearchParameters>>();
-                var stringPropertyRepository = scope.ServiceProvider.GetService<IStringPropertyRepository<StringProperty, SearchParameters>>();
-                var productVariantBooleanPropertyRepository = scope.ServiceProvider.GetService<IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters>>();
-                var productVariantNumericPropertyRepository = scope.ServiceProvider.GetService<IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, ProductVariantNumericPropertyPaginationParameters>>();
-                var productVariantStringPropertyRepository = scope.ServiceProvider.GetService<IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>>();
+                var productRepository = scope.ServiceProvider.GetService<IProductRepository<Product, ISearchParameters>>();
+                var productVariantRepository = scope.ServiceProvider.GetService<IProductVariantRepository<ProductVariant, IProductVariantSearchParameters>>();
+                var booleanPropertyRepository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, ISearchParameters>>();
+                var numericPropertyRepository = scope.ServiceProvider.GetService<INumericPropertyRepository<NumericProperty, ISearchParameters>>();
+                var stringPropertyRepository = scope.ServiceProvider.GetService<IStringPropertyRepository<StringProperty, ISearchParameters>>();
+                var productVariantBooleanPropertyRepository = scope.ServiceProvider.GetService<IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters>>();
+                var productVariantNumericPropertyRepository = scope.ServiceProvider.GetService<IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters>>();
+                var productVariantStringPropertyRepository = scope.ServiceProvider.GetService<IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters>>();
 
                 var products = await productRepository.GetMultiple(new SearchParameters { PageSize = -1 });
                 var booleanProperties = await booleanPropertyRepository.GetMultiple(new SearchParameters { PageSize = -1 });

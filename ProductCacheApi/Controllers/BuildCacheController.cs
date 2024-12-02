@@ -7,11 +7,11 @@ namespace ProductCacheApi.Controllers
 
     [Route("build-cache")]
     [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class HomeController : Shared.Controllers.BasicControllerTemplate
+    public class BuildCacheController : Shared.Controllers.BasicControllerTemplate
     {
         private readonly IProductCacheFactory _productCacheFactory;
 
-        public HomeController(IProductCacheFactory productCacheFactory)
+        public BuildCacheController(IProductCacheFactory productCacheFactory)
         {
             _productCacheFactory = productCacheFactory;
         }

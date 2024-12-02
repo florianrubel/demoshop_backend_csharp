@@ -9,12 +9,12 @@ using Shared.StaticServices;
 namespace ProductCacheApi.Repositories.Products
 {
     public class ProductVariantStringPropertyRepository
-        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>
-        , IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>
+        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, ProductVariantStringProperty, IProductVariantStringPropertySearchParameters>
+        , IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters>
     {
         public ProductVariantStringPropertyRepository(ReadOnlyDbContext context) : base(context) { }
 
-        public async override Task<PagedList<ProductVariantStringProperty>> GetMultiple(ProductVariantStringPropertySearchParameters parameters)
+        public async override Task<PagedList<ProductVariantStringProperty>> GetMultiple(IProductVariantStringPropertySearchParameters parameters)
         {
             var collection = _dbSet as IQueryable<ProductVariantStringProperty>;
 

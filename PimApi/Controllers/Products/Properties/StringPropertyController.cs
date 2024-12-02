@@ -11,9 +11,9 @@ namespace PimApi.Controllers.Products.Properties
 {
     [Route("properties/string-properties")]
     [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class StringPropertyController : DefaultControllerTemplate<StringProperty, ViewStringProperty, CreateStringProperty, PatchStringProperty, SearchParameters>
+    public class StringPropertyController : DefaultControllerTemplate<StringProperty, ViewStringProperty, CreateStringProperty, PatchStringProperty, ISearchParameters>
     {
-        public StringPropertyController(IMapper mapper, IStringPropertyRepository<StringProperty, SearchParameters> repository) : base(mapper, repository)
+        public StringPropertyController(IMapper mapper, IStringPropertyRepository<StringProperty, ISearchParameters> repository) : base(mapper, repository)
         {
         }
     }

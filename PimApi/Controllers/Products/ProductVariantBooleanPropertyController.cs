@@ -10,9 +10,9 @@ namespace PimApi.Controllers.Products
 {
     [Route("product-variant-boolean-properties")]
     [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class ProductVariantBooleanPropertyController : DefaultControllerTemplate<ProductVariantBooleanProperty, ViewProductVariantBooleanProperty, CreateProductVariantBooleanProperty, PatchProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters>
+    public class ProductVariantBooleanPropertyController : DefaultControllerTemplate<ProductVariantBooleanProperty, ViewProductVariantBooleanProperty, CreateProductVariantBooleanProperty, PatchProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters>
     {
-        public ProductVariantBooleanPropertyController(IMapper mapper, IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters> repository) : base(mapper, repository)
+        public ProductVariantBooleanPropertyController(IMapper mapper, IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters> repository) : base(mapper, repository)
         {
         }
     }

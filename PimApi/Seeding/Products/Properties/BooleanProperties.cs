@@ -13,7 +13,7 @@ namespace PimApi.Seeding.Products.Properties
         {
             using (var scope = app.Services.CreateScope())
             {
-                var repository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, SearchParameters>>();
+                var repository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, ISearchParameters>>();
 
                 var properties = new List<BooleanProperty>();
 

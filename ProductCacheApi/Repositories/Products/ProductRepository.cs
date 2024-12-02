@@ -7,12 +7,12 @@ using SharedProducts.Entities.Products;
 namespace ProductCacheApi.Repositories.Products
 {
     public class ProductRepository
-        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, Product, SearchParameters>
-        , IProductRepository<Product, SearchParameters>
+        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, Product, ISearchParameters>
+        , IProductRepository<Product, ISearchParameters>
     {
         public ProductRepository(ReadOnlyDbContext context) : base(context) { }
 
-        public async override Task<PagedList<Product>> GetMultiple(SearchParameters parameters)
+        public async override Task<PagedList<Product>> GetMultiple(ISearchParameters parameters)
         {
             var collection = _dbSet as IQueryable<Product>;
 

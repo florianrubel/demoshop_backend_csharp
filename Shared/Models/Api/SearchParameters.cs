@@ -2,6 +2,6 @@
 {
     public class SearchParameters : PaginationParameters, ISearchParameters
     {
-        public string? SearchQuery { get; set; }
+        public string SearchQuery { get; set; }
     }
 }

@@ -7,12 +7,12 @@ using Shared.Models.Api;
 namespace PimApi.Repositories.Products
 {
     public class ProductRepository
-        : Shared.Repositories.UuidBaseRepository<MainDbContext, Product, SearchParameters>
-        , IProductRepository<Product, SearchParameters>
+        : Shared.Repositories.UuidBaseRepository<MainDbContext, Product, ISearchParameters>
+        , IProductRepository<Product, ISearchParameters>
     {
         public ProductRepository(MainDbContext context) : base(context) {}
 
-        public async override Task<PagedList<Product>> GetMultiple(SearchParameters parameters)
+        public async override Task<PagedList<Product>> GetMultiple(ISearchParameters parameters)
         {
             var collection = _dbSet as IQueryable<Product>;
 

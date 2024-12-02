@@ -11,9 +11,9 @@ namespace PimApi.Controllers.Products.Properties
 {
     [Route("properties/numeric-properties")]
     [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class NumericPropertyController : DefaultControllerTemplate<NumericProperty, ViewNumericProperty, CreateNumericProperty, PatchNumericProperty, SearchParameters>
+    public class NumericPropertyController : DefaultControllerTemplate<NumericProperty, ViewNumericProperty, CreateNumericProperty, PatchNumericProperty, ISearchParameters>
     {
-        public NumericPropertyController(IMapper mapper, INumericPropertyRepository<NumericProperty, SearchParameters> repository) : base(mapper, repository)
+        public NumericPropertyController(IMapper mapper, INumericPropertyRepository<NumericProperty, ISearchParameters> repository) : base(mapper, repository)
         {
         }
     }

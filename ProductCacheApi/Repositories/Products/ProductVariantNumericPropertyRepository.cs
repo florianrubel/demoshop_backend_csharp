@@ -8,12 +8,12 @@ using Shared.StaticServices;
 namespace ProductCacheApi.Repositories.Products
 {
     public class ProductVariantNumericPropertyRepository
-        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, ProductVariantNumericProperty, ProductVariantNumericPropertyPaginationParameters>
-        , IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, ProductVariantNumericPropertyPaginationParameters>
+        : Shared.Repositories.UuidReadOnlyRepository<ReadOnlyDbContext, ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters>
+        , IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters>
     {
         public ProductVariantNumericPropertyRepository(ReadOnlyDbContext context) : base(context) { }
 
-        public async override Task<PagedList<ProductVariantNumericProperty>> GetMultiple(ProductVariantNumericPropertyPaginationParameters parameters)
+        public async override Task<PagedList<ProductVariantNumericProperty>> GetMultiple(IProductVariantNumericPropertyPaginationParameters parameters)
         {
             var collection = _dbSet as IQueryable<ProductVariantNumericProperty>;
 

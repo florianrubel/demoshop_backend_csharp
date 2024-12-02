@@ -9,12 +9,12 @@ using Shared.StaticServices;
 namespace PimApi.Repositories.Products
 {
     public class ProductVariantStringPropertyRepository
-        : Shared.Repositories.UuidBaseRepository<MainDbContext, ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>
-        , IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>
+        : Shared.Repositories.UuidBaseRepository<MainDbContext, ProductVariantStringProperty, IProductVariantStringPropertySearchParameters>
+        , IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters>
     {
         public ProductVariantStringPropertyRepository(MainDbContext context) : base(context) { }
 
-        public async override Task<PagedList<ProductVariantStringProperty>> GetMultiple(ProductVariantStringPropertySearchParameters parameters)
+        public async override Task<PagedList<ProductVariantStringProperty>> GetMultiple(IProductVariantStringPropertySearchParameters parameters)
         {
             var collection = _dbSet as IQueryable<ProductVariantStringProperty>;
 

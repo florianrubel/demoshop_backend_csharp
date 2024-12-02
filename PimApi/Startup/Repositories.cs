@@ -15,14 +15,14 @@ namespace PimApi.Startup
         public static void Register(WebApplicationBuilder builder)
         {
             builder.Services
-                .AddScoped<IBooleanPropertyRepository<BooleanProperty, SearchParameters>, BooleanPropertyRepository>()
-                .AddScoped<INumericPropertyRepository<NumericProperty, SearchParameters>, NumericPropertyRepository>()
-                .AddScoped<IStringPropertyRepository<StringProperty, SearchParameters>, StringPropertyRepository>()
-                .AddScoped<IProductRepository<Product, SearchParameters>, ProductRepository>()
-                .AddScoped<IProductVariantRepository<ProductVariant, ProductVariantSearchParameters>, ProductVariantRepository>()
-                .AddScoped<IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters>, ProductVariantBooleanPropertyRepository>()
-                .AddScoped<IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, ProductVariantNumericPropertyPaginationParameters>, ProductVariantNumericPropertyRepository>()
-                .AddScoped<IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>, ProductVariantStringPropertyRepository>();
+                .AddScoped<IBooleanPropertyRepository<BooleanProperty, ISearchParameters>, BooleanPropertyRepository>()
+                .AddScoped<INumericPropertyRepository<NumericProperty, ISearchParameters>, NumericPropertyRepository>()
+                .AddScoped<IStringPropertyRepository<StringProperty, ISearchParameters>, StringPropertyRepository>()
+                .AddScoped<IProductRepository<Product, ISearchParameters>, ProductRepository>()
+                .AddScoped<IProductVariantRepository<ProductVariant, IProductVariantSearchParameters>, ProductVariantRepository>()
+                .AddScoped<IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, IProductVariantBooleanPropertyPaginationParameters>, ProductVariantBooleanPropertyRepository>()
+                .AddScoped<IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, IProductVariantNumericPropertyPaginationParameters>, ProductVariantNumericPropertyRepository>()
+                .AddScoped<IProductVariantStringPropertyRepository<ProductVariantStringProperty, IProductVariantStringPropertySearchParameters>, ProductVariantStringPropertyRepository>();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace AuthApi.Repositories.Identity
             return await _userManager.FindByNameAsync(username);
         }
 
-        public async Task<IEnumerable<User>> GetMultiple(IEnumerable<string> userIds, ShapingWithOrderingParameters parameters)
+        public async Task<IEnumerable<User>> GetMultiple(IEnumerable<string> userIds, IShapingWithOrderingParameters parameters)
         {
             if (userIds == null)
                 throw new ArgumentNullException(nameof(userIds));
@@ -53,18 +53,18 @@ namespace AuthApi.Repositories.Identity
             return users;
         }
 
-        public async Task<PagedList<User>> GetMultiple(SearchParameters parameters)
+        public async Task<PagedList<User>> GetMultiple(ISearchParameters parameters)
         {
             IQueryable<User> collection = _users as IQueryable<User>;
 
             if (parameters.SearchQuery != null && parameters.SearchQuery.Length >= InputSizes.DEFAULT_TEXT_MIN_LENGTH)
             {
                 collection = collection.Where(r =>
-                    r.UserName.Contains(parameters.SearchQuery)
+                    (r.UserName != null && r.UserName.Contains(parameters.SearchQuery))
                     ||
-                    r.FirstName.Contains(parameters.SearchQuery)
+                    (r.FirstName != null && r.FirstName.Contains(parameters.SearchQuery))
                     ||
-                    r.LastName.Contains(parameters.SearchQuery)
+                    (r.LastName != null && r.LastName.Contains(parameters.SearchQuery))
                 );
             }
 

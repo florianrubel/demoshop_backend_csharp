@@ -11,9 +11,9 @@ namespace PimApi.Controllers.Products.Properties
 {
     [Route("properties/boolean-properties")]
     [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class BooleanPropertyController : DefaultControllerTemplate<BooleanProperty, ViewBooleanProperty, CreateBooleanProperty, PatchBooleanProperty, SearchParameters>
+    public class BooleanPropertyController : DefaultControllerTemplate<BooleanProperty, ViewBooleanProperty, CreateBooleanProperty, PatchBooleanProperty, ISearchParameters>
     {
-        public BooleanPropertyController(IMapper mapper, IBooleanPropertyRepository<BooleanProperty, SearchParameters> repository) : base(mapper, repository)
+        public BooleanPropertyController(IMapper mapper, IBooleanPropertyRepository<BooleanProperty, ISearchParameters> repository) : base(mapper, repository)
         {
         }
     }

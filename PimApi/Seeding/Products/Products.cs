@@ -22,7 +22,7 @@ namespace PimApi.Seeding.Products
             {
                 var random = new Random();
                 var apiKey = app.Configuration.GetSection("ChatGPT:ApiKey").Value;
-                var repository = scope.ServiceProvider.GetService<IProductRepository<Product, SearchParameters>>();
+                var repository = scope.ServiceProvider.GetService<IProductRepository<Product, ISearchParameters>>();
 
                 var products = new List<Product>();
 

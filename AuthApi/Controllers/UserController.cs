@@ -10,7 +10,12 @@ using Shared.Models.Api;
 
 namespace AuthApi.Controllers
 {
-    [Route("[Controller]")]
+    public class TestQuery
+    {
+        public int Page { get; set; }
+    }
+
+    [Route("user")]
     public class UserController : BasicControllerTemplate
     {
         private readonly IMapper _mapper;
@@ -30,8 +35,8 @@ namespace AuthApi.Controllers
         /// </summary>
         [HttpGet]
         [Route("")]
-        [Authorize(Roles = "Superadmin")]
-        public virtual async Task<ActionResult<PagedList<ViewUser>>> GetMultiple([FromQuery] SearchParameters parameters)
+        [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
+        public virtual async Task<ActionResult<PagedList<ViewUser>>> GetMultiple([FromQuery] ISearchParameters parameters)
         {
             var entities = await _userRepository.GetMultiple(parameters);
             SetPaginationHeaders(entities);
