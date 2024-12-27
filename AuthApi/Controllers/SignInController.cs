@@ -11,7 +11,7 @@ namespace AuthApi.Controllers
 {
 
     [ApiController]
-    [Route("signin")]
+    [Route("sign-in")]
     public class SignInController : ControllerBase
     {
         private readonly SignInManager<User> _signInManager;
