@@ -9,7 +9,7 @@ namespace SharedProducts.Models.Products.Product
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string? Name { get; set; }
         [LocalizedField]
-        public Dictionary<string, string> Description { get; set; }
+        public Dictionary<string, string> DescriptionLocalized { get; set; }
 
         public int? DefaultPriceInCents { get; set; }
     }

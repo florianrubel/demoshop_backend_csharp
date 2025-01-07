@@ -123,6 +123,7 @@ namespace PimApi.Seeding.Products
 
                     var jsonString = File.ReadAllText(CACHE_FILENAME_PRODUCTVARIANT_STRINGPROPERTIES);
                     productVariantStringProperties = JsonSerializer.Deserialize<List<ProductVariantStringProperty>>(jsonString);
+                    writeFile = false;
                 }
                 else
                 {
@@ -172,8 +173,14 @@ namespace PimApi.Seeding.Products
                                     productVariant.Pictures.Add($"{pictureUrlPrefix}_{i}.webp");
                                 }
 
-                                productVariant = await productVariantRepository.Create(productVariant);
-                                productVariants.Add(productVariant);
+                                try
+                                {
+                                    productVariant = await productVariantRepository.Create(productVariant);
+                                    productVariants.Add(productVariant);
+                                } catch
+                                {
+
+                                }
 
                                 productVariantBooleanProperties.AddRange(new List<ProductVariantBooleanProperty>()
                                 {
@@ -202,21 +209,28 @@ namespace PimApi.Seeding.Products
                         }
                     }
                 }
+                Console.WriteLine("Saving boolean relations");
                 productVariantBooleanProperties = (await productVariantBooleanPropertyRepository.CreateRange(productVariantBooleanProperties)).ToList();
+                Console.WriteLine("Saving numeric relations");
                 productVariantNumericProperties = (await productVariantNumericPropertyRepository.CreateRange(productVariantNumericProperties)).ToList();
+                Console.WriteLine("Saving string relations");
                 productVariantStringProperties = (await productVariantStringPropertyRepository.CreateRange(productVariantStringProperties)).ToList();
 
                 if (writeFile)
                 {
+                    Console.WriteLine("Writing json file for productVariants");
                     var wJson = JsonSerializer.Serialize(productVariants);
                     File.WriteAllText(CACHE_FILENAME, wJson);
 
+                    Console.WriteLine("Writing json file for productVariantBooleanProperties");
                     var wJsonBoolean = JsonSerializer.Serialize(productVariantBooleanProperties);
                     File.WriteAllText(CACHE_FILENAME_PRODUCTVARIANT_BOOLEANPROPERTIES, wJsonBoolean);
 
+                    Console.WriteLine("Writing json file for productVariantNumericProperties");
                     var wJsonNumeric = JsonSerializer.Serialize(productVariantNumericProperties);
                     File.WriteAllText(CACHE_FILENAME_PRODUCTVARIANT_NUMERICPROPERTIES, wJsonNumeric);
 
+                    Console.WriteLine("Writing json file for productVariantStringProperties");
                     var wJsonString = JsonSerializer.Serialize(productVariantStringProperties);
                     File.WriteAllText(CACHE_FILENAME_PRODUCTVARIANT_STRINGPROPERTIES, wJsonString);
                 }

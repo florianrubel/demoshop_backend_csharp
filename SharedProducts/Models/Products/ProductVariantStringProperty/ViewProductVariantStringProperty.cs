@@ -8,6 +8,6 @@ namespace SharedProducts.Models.Products.ProductVariantStringProperty
 
         public Guid? PropertyId { get; set; }
 
-        public bool Value { get; set; } = false;
+        public string Value { get; set; }
     }
 }

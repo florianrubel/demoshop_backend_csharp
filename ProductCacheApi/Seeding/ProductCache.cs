@@ -56,9 +56,9 @@ namespace ProductCacheApi.Seeding
                 });
 
 
-                var productCache = scope.ServiceProvider.GetService<IProductCacheFactory>();
+                //var productCache = scope.ServiceProvider.GetService<IProductCacheFactory>();
 
-                await productCache.Build();
+                //await productCache.Build();
             }
             Console.WriteLine("Caches seeded");
         }

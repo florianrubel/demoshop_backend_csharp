@@ -74,6 +74,34 @@ namespace Shared.Controllers
             return Ok(_mapper.Map<IEnumerable<ViewType>>(entities).ShapeData(parameters.Fields));
         }
 
+        [HttpPost]
+        [Route("ids")]
+        [SwaggerOperation(
+            "Get multiple by ids",
+            "<hr/><p><strong>&#x1F510; Authentication: Bearer</p><p><hr/></hr>" +
+            "Get a list by providing a comma separated list of guids in the request body." +
+            "Use this method if you requesting too many ids and the url would get too long." +
+            "<p>Example</p>" +
+            "<pre><code>" +
+            "[\n" +
+            "   \"4aec62a1-c12d-405b-8902-3c2388f2bd76\",\n" +
+            "   \"01b09797-b9fe-43d4-878c-4010cb9c90c8\",\n" +
+            "]" +
+            "</code></pre>"
+        )]
+        public virtual async Task<ActionResult<IEnumerable<ViewType>>> GetMultipleByPost(
+            [FromBody] IEnumerable<Guid> ids,
+            [FromQuery] ShapingWithOrderingParameters parameters
+        )
+        {
+            if (ids == null)
+                return BadRequest();
+
+            var entities = await _repository.GetMultipleByIds(ids, parameters);
+
+            return Ok(_mapper.Map<IEnumerable<ViewType>>(entities).ShapeData(parameters.Fields));
+        }
+
         [HttpGet]
         [Route("{id}")]
         [SwaggerOperation(

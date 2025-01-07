@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using PimApi.Repositories.Products;
 using Shared.Controllers;
-using Shared.Helpers;
 using Shared.Models.Api;
 using SharedProducts.Entities.Products;
 using SharedProducts.Models.Products.Product;

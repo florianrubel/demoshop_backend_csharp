@@ -19,7 +19,7 @@ namespace ProductCacheApi.Repositories.Products.Properties
             if (parameters.SearchQuery != null && parameters.SearchQuery.Length >= InputSizes.DEFAULT_TEXT_MIN_LENGTH)
             {
                 collection = collection.Where(r =>
-                    (r.Name != null && r.Name.Contains(parameters.SearchQuery))
+                    (r.Name != null && r.Name.ToLower().Contains(parameters.SearchQuery.ToLower()))
                 );
             }
 

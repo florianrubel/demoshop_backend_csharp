@@ -31,30 +31,37 @@ namespace PimApi.Seeding.Products
                 {
                     var json = File.ReadAllText(CACHE_FILENAME);
                     products = JsonSerializer.Deserialize<List<Product>>(json);
+                    await repository.CreateRange(products);
+                    writeFile = false;
                 } else
                 {
                     ChatClient client = new(model: "gpt-3.5-turbo", apiKey: apiKey);
 
                     for (var i = 0; i < 100; i++)
                     {
-                        var completionName = await client.CompleteChatAsync("give me a product name and description for a shirt as json with the keys product_name and description without using the words T-shirt, shirt, top or tee. Translate the descriptions in the languages en-US, de-DE, it-IT, fr-FR, es-ES and and store it in description in the format { \"en-US\": \"localized description\" }");
+                        var completionName = await client.CompleteChatAsync("give me a product name and description for a shirt as json with the keys product_name and description containing 10 to 20 sentenses without using the words T-shirt, shirt, top or tee. Translate the descriptions in the languages en-US, de-DE, it-IT, fr-FR, es-ES and and store it in description in the format { \"en-US\": \"localized description\" }. Return that answer as valid json.");
                         var gptJson = completionName.Value.Content[0].Text;
-                        var answer = JsonSerializer.Deserialize<ChatGPTAnswer>(gptJson);
-                        var product = new Product
-                        {
-                            Name = answer.product_name,
-                            DescriptionLocalized = answer.description,
-                            DefaultPriceInCents = random.Next(1000, 100000),
-                        };
-                        products.Add(product);
                         Console.WriteLine("#############################");
-                        Console.WriteLine($"{i}:{product.Name}");
-                        Console.WriteLine($"{i}:{product.DescriptionLocalized}");
+
+                        try
+                        {
+                            var answer = JsonSerializer.Deserialize<ChatGPTAnswer>(gptJson);
+                            var product = new Product
+                            {
+                                Name = answer.product_name,
+                                DescriptionLocalized = answer.description,
+                                DefaultPriceInCents = random.Next(1000, 100000),
+                            };
+                            products.Add(await repository.Create(product));
+                            Console.WriteLine($"{i}:{product.Name}");
+                            Console.WriteLine($"{i}:{product.DescriptionLocalized}");
+                        } catch
+                        {
+                            Console.WriteLine(gptJson);
+                        }
                         Console.WriteLine("#############################");
                     }
                 }
-
-                products = (await repository.CreateRange(products)).ToList();
 
                 if (writeFile)
                 {

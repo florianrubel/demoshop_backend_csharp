@@ -10,7 +10,7 @@ namespace SharedProducts.Models.Products.Product
         public string Name { get; set; }
 
         [LocalizedField]
-        public Dictionary<string, string> Description { get; set; }
+        public Dictionary<string, string> DescriptionLocalized { get; set; }
 
         public int DefaultPriceInCents { get; set; }
     }
