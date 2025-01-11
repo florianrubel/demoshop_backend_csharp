@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedStockCache", "SharedS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductSearchApi", "ProductSearchApi\ProductSearchApi.csproj", "{92683711-8B69-47F1-91E2-820B5604577A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CdnApi", "CdnApi\CdnApi.csproj", "{C2DA8BD7-AB19-4910-A56D-D15BE256798C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{92683711-8B69-47F1-91E2-820B5604577A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92683711-8B69-47F1-91E2-820B5604577A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92683711-8B69-47F1-91E2-820B5604577A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2DA8BD7-AB19-4910-A56D-D15BE256798C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2DA8BD7-AB19-4910-A56D-D15BE256798C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2DA8BD7-AB19-4910-A56D-D15BE256798C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2DA8BD7-AB19-4910-A56D-D15BE256798C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

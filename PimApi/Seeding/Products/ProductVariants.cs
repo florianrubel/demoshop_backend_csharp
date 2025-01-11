@@ -165,12 +165,12 @@ namespace PimApi.Seeding.Products
                                 {
                                     PriceInCents = price,
                                     ProductId = product.Id,
-                                    ListPicture = $"{pictureUrlPrefix}_0.jpg",
+                                    ListPicture = $"{pictureUrlPrefix}0.webp",
                                     Pictures = new List<string>(),
                                 };
                                 for (var i = 0; i < 5; i++)
                                 {
-                                    productVariant.Pictures.Add($"{pictureUrlPrefix}_{i}.webp");
+                                    productVariant.Pictures.Add($"{pictureUrlPrefix}{i}.webp");
                                 }
 
                                 try

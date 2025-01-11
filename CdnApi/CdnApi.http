@@ -1,0 +1,6 @@
+@CdnApi_HostAddress = http://localhost:5049
+
+GET {{CdnApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
