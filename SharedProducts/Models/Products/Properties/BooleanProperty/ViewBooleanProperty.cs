@@ -1,9 +1,6 @@
-﻿using Shared.Models;
-
-namespace SharedProducts.Models.Products.Properties.BooleanProperty
+﻿namespace SharedProducts.Models.Products.Properties.BooleanProperty
 {
-    public class ViewBooleanProperty : UuidViewModel
+    public class ViewBooleanProperty : AbstractViewProperty
     {
-        public string Name { get; set; }
     }
 }

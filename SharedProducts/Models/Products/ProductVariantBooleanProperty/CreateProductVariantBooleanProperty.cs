@@ -1,15 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SharedProducts.Models.Products.ProductVariantBooleanProperty
+﻿namespace SharedProducts.Models.Products.ProductVariantBooleanProperty
 {
-    public class CreateProductVariantBooleanProperty
+    public class CreateProductVariantBooleanProperty : AbstractCreateProductVariantRelation<bool>
     {
-        [Required]
-        public Guid? ProductVariantId { get; set; }
-
-        [Required]
-        public Guid? PropertyId { get; set; }
-
-        public bool Value { get; set; } = false;
     }
 }

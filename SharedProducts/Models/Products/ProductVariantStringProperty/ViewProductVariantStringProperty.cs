@@ -1,13 +1,6 @@
-﻿using Shared.Models;
-
-namespace SharedProducts.Models.Products.ProductVariantStringProperty
+﻿namespace SharedProducts.Models.Products.ProductVariantStringProperty
 {
-    public class ViewProductVariantStringProperty : UuidViewModel
+    public class ViewProductVariantStringProperty : AbstractViewProductVariantRelation<string>
     {
-        public Guid? ProductVariantId { get; set; }
-
-        public Guid? PropertyId { get; set; }
-
-        public string Value { get; set; }
     }
 }

@@ -1,7 +1,10 @@
-﻿using OpenAI.Chat;
-using SharedProducts.Entities.Products;
+﻿using AutoMapper;
+using OpenAI.Chat;
 using PimApi.Repositories.Products;
 using Shared.Models.Api;
+using SharedProducts.Entities.Products;
+using SharedProducts.Models.Products.Product;
+using SharedProducts.Profiles.Products;
 using System.Text.Json;
 
 namespace PimApi.Seeding.Products
@@ -24,6 +27,11 @@ namespace PimApi.Seeding.Products
                 var random = new Random();
                 var apiKey = app.Configuration.GetSection("ChatGPT:ApiKey").Value;
                 var repository = scope.ServiceProvider.GetService<IProductRepository<Product, SearchParameters>>();
+                var mapperConfig = new MapperConfiguration(c =>
+                {
+                    c.AddProfile<ProductProfile>();
+                });
+                var mapper = mapperConfig.CreateMapper();
 
                 var products = new List<Product>();
 
@@ -33,7 +41,8 @@ namespace PimApi.Seeding.Products
                     products = JsonSerializer.Deserialize<List<Product>>(json);
                     await repository.CreateRange(products);
                     writeFile = false;
-                } else
+                }
+                else
                 {
                     ChatClient client = new(model: "gpt-3.5-turbo", apiKey: apiKey);
 
@@ -55,7 +64,8 @@ namespace PimApi.Seeding.Products
                             products.Add(await repository.Create(product));
                             Console.WriteLine($"{i}:{product.Name}");
                             Console.WriteLine($"{i}:{product.DescriptionLocalized}");
-                        } catch
+                        }
+                        catch
                         {
                             Console.WriteLine(gptJson);
                         }
@@ -65,7 +75,8 @@ namespace PimApi.Seeding.Products
 
                 if (writeFile)
                 {
-                    var wJson = JsonSerializer.Serialize(products);
+                    var viewProducts = mapper.Map<List<ViewProduct>>(products);
+                    var wJson = JsonSerializer.Serialize(viewProducts);
                     File.WriteAllText(CACHE_FILENAME, wJson);
                 }
             }

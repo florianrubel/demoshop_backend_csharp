@@ -8,7 +8,7 @@ namespace Shared.Repositories
         : UuidReadOnlyRepository<DbContextType, EntityType, PaginationParametersType>
         , IUuidBaseRepository<EntityType, PaginationParametersType>
         where DbContextType : DbContext
-        where EntityType : UuidBaseEntity
+        where EntityType : UuidBaseEntity, new()
         where PaginationParametersType : PaginationParameters
     {
         public UuidBaseRepository(DbContextType context) : base(context) { }
@@ -19,7 +19,6 @@ namespace Shared.Repositories
             _dbContext.Entry(entityProxy).CurrentValues.SetValues(entity);
             await _dbSet.AddAsync(entityProxy);
             await _dbContext.SaveChangesAsync();
-            //if (EntitiesAdded != null) EntitiesAdded.Invoke(this, new List<EntityType> { entity });
             return entityProxy;
         }
 
@@ -34,7 +33,6 @@ namespace Shared.Repositories
             }
             await _dbSet.AddRangeAsync(entityProxies);
             await _dbContext.SaveChangesAsync();
-            //if (EntitiesAdded != null) EntitiesAdded.Invoke(this, entityProxies);
             return entityProxies;
         }
 
@@ -42,7 +40,6 @@ namespace Shared.Repositories
         {
             _dbSet.Update(entity);
             await _dbContext.SaveChangesAsync();
-            //if (EntitiesUpdated != null) EntitiesUpdated.Invoke(this, new List<EntityType> { entity });
             return entity;
         }
 
@@ -50,7 +47,6 @@ namespace Shared.Repositories
         {
             _dbSet.UpdateRange(entities);
             await _dbContext.SaveChangesAsync();
-            //if (EntitiesUpdated != null) EntitiesUpdated.Invoke(this, entities);
             return entities;
         }
 
@@ -58,14 +54,23 @@ namespace Shared.Repositories
         {
             _dbSet.Remove(entity);
             await _dbContext.SaveChangesAsync();
-            //if (EntitiesUpdated != null) EntitiesDeleted.Invoke(this, new List<EntityType> { entity });
         }
 
         public virtual async Task DeleteRange(IEnumerable<EntityType> entities)
         {
             _dbSet.RemoveRange(entities);
             await _dbContext.SaveChangesAsync();
-            //EntitiesDeleted.Invoke(this, entities);
+        }
+        public virtual async Task Delete(Guid id)
+        {
+            _dbSet.Remove(new EntityType { Id = id });
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public virtual async Task DeleteRange(IEnumerable<Guid> ids)
+        {
+            _dbSet.RemoveRange(from id in ids select new EntityType { Id = id });
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

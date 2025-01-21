@@ -1,7 +1,6 @@
 ﻿namespace SharedProducts.Models.Products.ProductVariantNumericProperty
 {
-    public class PatchProductVariantNumericProperty
+    public class PatchProductVariantNumericProperty : AbstractPatchProductVariantRelation<double>
     {
-        public double Value { get; set; }
     }
 }

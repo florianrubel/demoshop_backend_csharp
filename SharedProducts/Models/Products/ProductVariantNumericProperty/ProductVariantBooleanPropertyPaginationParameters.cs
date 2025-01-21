@@ -1,16 +1,6 @@
-﻿using Shared.Models.Api;
-using Swashbuckle.AspNetCore.Annotations;
-
-namespace SharedProducts.Models.Products.ProductVariantNumericProperty
+﻿namespace SharedProducts.Models.Products.ProductVariantNumericProperty
 {
-    public class ProductVariantNumericPropertyPaginationParameters : PaginationParameters
+    public class ProductVariantNumericPropertyPaginationParameters : AbstractProductVariantPaginationParameters<double?>
     {
-        [SwaggerParameter("Comma separated list of guids.")]
-        public string? ProductVariantIds { get; set; }
-
-        [SwaggerParameter("Comma separated list of guids.")]
-        public string? PropertyIds { get; set; }
-
-        public double? Value { get; set; }
     }
 }

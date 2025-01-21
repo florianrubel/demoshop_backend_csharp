@@ -1,6 +1,9 @@
-﻿using SharedProducts.Entities.Products.Properties;
+﻿using AutoMapper;
 using PimApi.Repositories.Products.Properties;
 using Shared.Models.Api;
+using SharedProducts.Entities.Products.Properties;
+using SharedProducts.Models.Products.Properties.BooleanProperty;
+using SharedProducts.Profiles.Products.Properties;
 using System.Text.Json;
 
 namespace PimApi.Seeding.Products.Properties
@@ -15,6 +18,11 @@ namespace PimApi.Seeding.Products.Properties
             {
                 var writeFile = true;
                 var repository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, SearchParameters>>();
+                var mapperConfig = new MapperConfiguration(c =>
+                {
+                    c.AddProfile<BooleanPropertyProfile>();
+                });
+                var mapper = mapperConfig.CreateMapper();
 
                 var properties = new List<BooleanProperty>();
 
@@ -40,7 +48,8 @@ namespace PimApi.Seeding.Products.Properties
 
                 if (writeFile)
                 {
-                    var wJson = JsonSerializer.Serialize(properties);
+                    var viewProperties = mapper.Map<List<ViewBooleanProperty>>(properties);
+                    var wJson = JsonSerializer.Serialize(viewProperties);
                     File.WriteAllText(CACHE_FILENAME, wJson);
                 }
             }

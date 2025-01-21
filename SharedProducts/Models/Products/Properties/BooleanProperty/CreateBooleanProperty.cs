@@ -1,11 +1,6 @@
-﻿using Shared.Constants;
-using System.ComponentModel.DataAnnotations;
-
-namespace SharedProducts.Models.Products.Properties.BooleanProperty
+﻿namespace SharedProducts.Models.Products.Properties.BooleanProperty
 {
-    public class CreateBooleanProperty
+    public class CreateBooleanProperty : AbstractCreateProperty
     {
-        [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
-        public string Name { get; set; }
     }
 }

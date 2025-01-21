@@ -8,6 +8,9 @@ using PimApi.Repositories.Products;
 using PimApi.Repositories.Products.Properties;
 using Shared.Models.Api;
 using System.Text.Json;
+using AutoMapper;
+using SharedProducts.Profiles.Products.Properties;
+using SharedProducts.Profiles.Products;
 
 namespace PimApi.Seeding.Products
 {
@@ -26,8 +29,7 @@ namespace PimApi.Seeding.Products
         private const string CACHE_FILENAME = "cache.productVariants.json";
         private const string CACHE_FILENAME_PRODUCTVARIANT_BOOLEANPROPERTIES = "cache.productVariantsBooleanProperties.json";
         private const string CACHE_FILENAME_PRODUCTVARIANT_NUMERICPROPERTIES = "cache.productVariantsNumericProperties.json";
-        private const string CACHE_FILENAME_PRODUCTVARIANT_STRINGPROPERTIES = "cache." +
-            "productVariantsStringProperties.json";
+        private const string CACHE_FILENAME_PRODUCTVARIANT_STRINGPROPERTIES = "cache.productVariantsStringProperties.json";
         public static async Task Seed(WebApplication app)
         {
             using (var scope = app.Services.CreateScope())
@@ -73,6 +75,13 @@ namespace PimApi.Seeding.Products
                     { "3xl", 102 },
                 };
 
+                var mapperConfig = new MapperConfiguration(c => {
+                    c.AddProfile<ProductVariantProfile>();
+                    c.AddProfile<ProductVariantBooleanPropertyProfile>();
+                    c.AddProfile<ProductVariantNumericPropertyProfile>();
+                    c.AddProfile<ProductVariantStringPropertyProfile>();
+                });
+                var mapper = mapperConfig.CreateMapper();
                 var productRepository = scope.ServiceProvider.GetService<IProductRepository<Product, SearchParameters>>();
                 var productVariantRepository = scope.ServiceProvider.GetService<IProductVariantRepository<ProductVariant, ProductVariantPaginationParameters>>();
                 var booleanPropertyRepository = scope.ServiceProvider.GetService<IBooleanPropertyRepository<BooleanProperty, SearchParameters>>();
@@ -189,14 +198,14 @@ namespace PimApi.Seeding.Products
                                     new ProductVariantBooleanProperty { ProductVariantId = productVariant.Id, PropertyId = booleanPropertyIsSale.Id, Value = isSale },
                                 });
 
-                                    productVariantNumericProperties.AddRange(new List<ProductVariantNumericProperty>()
+                                productVariantNumericProperties.AddRange(new List<ProductVariantNumericProperty>()
                                 {
                                     new ProductVariantNumericProperty { ProductVariantId = productVariant.Id, PropertyId = numericPropertyBodySize.Id, Value = bodySizeMap[size] },
                                     new ProductVariantNumericProperty { ProductVariantId = productVariant.Id, PropertyId = numericPropertyChestSize.Id, Value = chestSizeMap[size] },
                                     new ProductVariantNumericProperty { ProductVariantId = productVariant.Id, PropertyId = numericPropertyWaistSize.Id, Value = waistSizeMap[size] },
                                 });
 
-                                    productVariantStringProperties.AddRange(new List<ProductVariantStringProperty>()
+                                productVariantStringProperties.AddRange(new List<ProductVariantStringProperty>()
                                 {
                                     new ProductVariantStringProperty { ProductVariantId = productVariant.Id, PropertyId = stringPropertySize.Id, Value = size },
                                     new ProductVariantStringProperty { ProductVariantId = productVariant.Id, PropertyId = stringPropertyColor.Id, Value = color },
@@ -211,27 +220,34 @@ namespace PimApi.Seeding.Products
                 }
                 Console.WriteLine("Saving boolean relations");
                 productVariantBooleanProperties = (await productVariantBooleanPropertyRepository.CreateRange(productVariantBooleanProperties)).ToList();
+
                 Console.WriteLine("Saving numeric relations");
                 productVariantNumericProperties = (await productVariantNumericPropertyRepository.CreateRange(productVariantNumericProperties)).ToList();
+
                 Console.WriteLine("Saving string relations");
                 productVariantStringProperties = (await productVariantStringPropertyRepository.CreateRange(productVariantStringProperties)).ToList();
 
                 if (writeFile)
                 {
+                    var viewProductVariantBooleanProperties = mapper.Map<List<ViewProductVariantBooleanProperty>>(productVariantBooleanProperties);
+                    var viewProductVariantNumericProperties = mapper.Map<List<ViewProductVariantNumericProperty>>(productVariantNumericProperties);
+                    var viewProductVariantStringProperties = mapper.Map<List<ViewProductVariantStringProperty>>(productVariantStringProperties);
+                    var viewProductVariants = mapper.Map<List<ViewProductVariant>>(productVariants);
+
                     Console.WriteLine("Writing json file for productVariants");
                     var wJson = JsonSerializer.Serialize(productVariants);
                     File.WriteAllText(CACHE_FILENAME, wJson);
 
                     Console.WriteLine("Writing json file for productVariantBooleanProperties");
-                    var wJsonBoolean = JsonSerializer.Serialize(productVariantBooleanProperties);
+                    var wJsonBoolean = JsonSerializer.Serialize(viewProductVariantBooleanProperties);
                     File.WriteAllText(CACHE_FILENAME_PRODUCTVARIANT_BOOLEANPROPERTIES, wJsonBoolean);
 
                     Console.WriteLine("Writing json file for productVariantNumericProperties");
-                    var wJsonNumeric = JsonSerializer.Serialize(productVariantNumericProperties);
+                    var wJsonNumeric = JsonSerializer.Serialize(viewProductVariantNumericProperties);
                     File.WriteAllText(CACHE_FILENAME_PRODUCTVARIANT_NUMERICPROPERTIES, wJsonNumeric);
 
                     Console.WriteLine("Writing json file for productVariantStringProperties");
-                    var wJsonString = JsonSerializer.Serialize(productVariantStringProperties);
+                    var wJsonString = JsonSerializer.Serialize(viewProductVariantStringProperties);
                     File.WriteAllText(CACHE_FILENAME_PRODUCTVARIANT_STRINGPROPERTIES, wJsonString);
                 }
                 Console.WriteLine("Product Variants seeded");

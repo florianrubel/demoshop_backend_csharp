@@ -1,15 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SharedProducts.Models.Products.ProductVariantNumericProperty
+﻿namespace SharedProducts.Models.Products.ProductVariantNumericProperty
 {
-    public class CreateProductVariantNumericProperty
+    public class CreateProductVariantNumericProperty : AbstractCreateProductVariantRelation<double>
     {
-        [Required]
-        public Guid? ProductVariantId { get; set; }
-
-        [Required]
-        public Guid? PropertyId { get; set; }
-
-        public double Value { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace PimApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.ProductVariant", b =>
@@ -86,7 +86,7 @@ namespace PimApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductVariants");
+                    b.ToTable("ProductVariants", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.ProductVariantBooleanProperty", b =>
@@ -116,7 +116,7 @@ namespace PimApi.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("ProductVariantBooleanProperties");
+                    b.ToTable("ProductVariantBooleanProperties", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.ProductVariantNumericProperty", b =>
@@ -146,7 +146,7 @@ namespace PimApi.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("ProductVariantNumericProperties");
+                    b.ToTable("ProductVariantNumericProperties", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.ProductVariantStringProperty", b =>
@@ -178,7 +178,7 @@ namespace PimApi.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("ProductVariantStringProperties");
+                    b.ToTable("ProductVariantStringProperties", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.Properties.BooleanProperty", b =>
@@ -200,7 +200,7 @@ namespace PimApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BooleanProperties");
+                    b.ToTable("BooleanProperties", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.Properties.NumericProperty", b =>
@@ -228,7 +228,7 @@ namespace PimApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("NumericProperties");
+                    b.ToTable("NumericProperties", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.Properties.StringProperty", b =>
@@ -254,7 +254,7 @@ namespace PimApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StringProperties");
+                    b.ToTable("StringProperties", (string)null);
                 });
 
             modelBuilder.Entity("SharedProducts.Entities.Products.ProductVariant", b =>

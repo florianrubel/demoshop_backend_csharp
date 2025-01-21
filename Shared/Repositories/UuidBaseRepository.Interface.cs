@@ -16,5 +16,8 @@ namespace Shared.Repositories
 
         Task Delete(EntityType entity);
         Task DeleteRange(IEnumerable<EntityType> entities);
+
+        Task Delete(Guid id);
+        Task DeleteRange(IEnumerable<Guid> ids);
     }
 }

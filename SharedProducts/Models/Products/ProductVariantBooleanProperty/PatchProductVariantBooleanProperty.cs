@@ -1,7 +1,6 @@
 ﻿namespace SharedProducts.Models.Products.ProductVariantBooleanProperty
 {
-    public class PatchProductVariantBooleanProperty
+    public class PatchProductVariantBooleanProperty : AbstractPatchProductVariantRelation<bool>
     {
-        public bool Value { get; set; } = false;
     }
 }
