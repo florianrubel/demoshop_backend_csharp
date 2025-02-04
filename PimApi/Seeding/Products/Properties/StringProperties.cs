@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using PimApi.Repositories.Products.Properties;
+using SharedProducts.Repositories.Write.Products.Properties;
 using Shared.Models.Api;
 using SharedProducts.Entities.Products.Properties;
 using SharedProducts.Models.Products.Properties.StringProperty;

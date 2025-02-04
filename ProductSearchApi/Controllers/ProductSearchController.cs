@@ -21,6 +21,7 @@ namespace ProductSearchApi.Controllers
         public async Task<ActionResult<ProductSearchResult>> Search([FromBody] ProductSearchRequest parameters)
         {
             var result = await _productSearchService.Search(parameters);
+            Console.WriteLine(result.Page);
             SetPaginationHeaders(
                 result.NbHits ?? 0,
                 result.HitsPerPage ?? 0,
@@ -32,7 +33,7 @@ namespace ProductSearchApi.Controllers
             {
                 Products = result.Hits
             };
-            var priceRange = result.FacetsStats["priceInCents"];
+            var priceRange = result.FacetsStats != null ? result.FacetsStats["priceInCents"] ?? null : null;
 
             foreach (var facet in result.Facets)
             {

@@ -32,6 +32,9 @@ namespace ProductCacheApi.Seeding
                         "stringProperties.size",
                         "stringProperties.cutout",
                         "stringProperties.color",
+                        "numericProperties.chestSize",
+                        "numericProperties.bodySize",
+                        "numericProperties.waistSize",
                         "priceInCents"
                     },
                     SearchableAttributes = new List<string>

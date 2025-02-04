@@ -1,6 +1,6 @@
 ﻿
-using Castle.Core.Configuration;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Models.Authentication;
 

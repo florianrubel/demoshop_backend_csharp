@@ -4,8 +4,8 @@ using SharedProducts.Models.Products.ProductVariant;
 using SharedProducts.Models.Products.ProductVariantBooleanProperty;
 using SharedProducts.Models.Products.ProductVariantNumericProperty;
 using SharedProducts.Models.Products.ProductVariantStringProperty;
-using ProductCacheApi.Repositories.Products;
-using ProductCacheApi.Repositories.Products.Properties;
+using SharedProducts.Repositories.ReadOnly.Products;
+using SharedProducts.Repositories.ReadOnly.Products.Properties;
 using Shared.Models.Api;
 
 namespace ProductCacheApi.Startup

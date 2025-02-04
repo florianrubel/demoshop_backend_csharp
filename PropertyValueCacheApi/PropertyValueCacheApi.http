@@ -1,0 +1,6 @@
+@PropertyValueCacheApi_HostAddress = http://localhost:5180
+
+GET {{PropertyValueCacheApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

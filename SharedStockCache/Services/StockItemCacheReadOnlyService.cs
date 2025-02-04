@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using SharedStockCache.Constants;
 using SharedStockCache.Models.StockItemCache;
 using StackExchange.Redis;
 
@@ -22,7 +23,7 @@ namespace SharedStockCache.Services
             IDatabase db = redis.GetDatabase();
 
             // Get the value by key
-            string value = await db.StringGetAsync(id.ToString());
+            string value = await db.StringGetAsync($"{Stock.STOCK_CACHE_ITEM_KEY_PREFIX}{id.ToString()}");
 
             // Clean up
             redis.Dispose();

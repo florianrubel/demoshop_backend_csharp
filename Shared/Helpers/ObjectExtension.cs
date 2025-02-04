@@ -51,5 +51,25 @@ namespace Shared.Helpers
 
             return dataShapedObject;
         }
+        public static void TrimStringProperties<TSource>(this TSource obj)
+        {
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+
+            // Get all properties of the object
+            var properties = obj.GetType().GetProperties()
+                .Where(p => p.PropertyType == typeof(string) && p.CanRead && p.CanWrite);
+
+            foreach (var property in properties)
+            {
+                // Get the current value of the property
+                var currentValue = property.GetValue(obj) as string;
+
+                if (currentValue != null)
+                {
+                    // Trim the value and set it back
+                    property.SetValue(obj, currentValue.Trim());
+                }
+            }
+        }
     }
 }

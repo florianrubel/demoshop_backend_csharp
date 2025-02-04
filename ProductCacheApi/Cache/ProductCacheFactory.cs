@@ -1,8 +1,8 @@
 ﻿using Algolia.Search.Clients;
 using Microsoft.Extensions.Options;
 using ProductCacheApi.Models;
-using ProductCacheApi.Repositories.Products;
-using ProductCacheApi.Repositories.Products.Properties;
+using SharedProducts.Repositories.ReadOnly.Products;
+using SharedProducts.Repositories.ReadOnly.Products.Properties;
 using Shared.Models.Api;
 using SharedProducts.Entities.Products;
 using SharedProducts.Entities.Products.Properties;
@@ -11,12 +11,15 @@ using SharedProducts.Models.Products.ProductVariantBooleanProperty;
 using SharedProducts.Models.Products.ProductVariantNumericProperty;
 using SharedProducts.Models.Products.ProductVariantStringProperty;
 using SharedProducts.Models.Search;
+using Microsoft.AspNetCore.SignalR;
+using ProductCacheApi.Hubs;
 
 namespace ProductCacheApi.Cache
 {
     public class ProductCacheFactory : IProductCacheFactory
     {
         private readonly IOptions<AlgoliaSettings> _algoliaSettings;
+        private readonly IHubContext<ProductCacheHub> _hubContext;
         private readonly IBooleanPropertyRepository<BooleanProperty, SearchParameters> _booleanPropertyRepository;
         private readonly INumericPropertyRepository<NumericProperty, SearchParameters> _numericPropertyRepository;
         private readonly IStringPropertyRepository<StringProperty, SearchParameters> _stringPropertyRepository;
@@ -30,6 +33,7 @@ namespace ProductCacheApi.Cache
 
         public ProductCacheFactory(
             IOptions<AlgoliaSettings> algoliaSettings,
+            IHubContext<ProductCacheHub> hubContext,
             IBooleanPropertyRepository<BooleanProperty, SearchParameters> booleanPropertyRepository,
             INumericPropertyRepository<NumericProperty, SearchParameters> numericPropertyRepository,
             IStringPropertyRepository<StringProperty, SearchParameters> stringPropertyRepository,
@@ -41,6 +45,7 @@ namespace ProductCacheApi.Cache
         )
         {
             _algoliaSettings = algoliaSettings;
+            _hubContext = hubContext;
             _booleanPropertyRepository = booleanPropertyRepository;
             _numericPropertyRepository = numericPropertyRepository;
             _stringPropertyRepository = stringPropertyRepository;
@@ -350,6 +355,7 @@ namespace ProductCacheApi.Cache
                     }
                 }
 
+                var items = new List<ProductSearchItem>();
                 foreach (var productVariant in relevantProductVariants)
                 {
                     var item = new ProductSearchItem
@@ -383,12 +389,18 @@ namespace ProductCacheApi.Cache
                         if (property == null) continue;
                         item.StringProperties.Add(property.Name, productVariantStringProperty.Value);
                     }
-
-                    await client.AddOrUpdateObjectAsync(_algoliaSettings.Value.IndexName, item.Id.ToString(), item);
+                    items.Add(item);
                 }
+                await client.SaveObjectsAsync(_algoliaSettings.Value.IndexName, items);
+                items.Clear();
 
                 counter++;
 
+                await _hubContext.Clients.All.SendAsync("cache-progress", new
+                {
+                    current = counter,
+                    count = products.Count()
+                });
                 Console.WriteLine($"{counter} / {products.Count()} / {Math.Round((double)(counter * 100 / products.Count()))}");
             }
         }

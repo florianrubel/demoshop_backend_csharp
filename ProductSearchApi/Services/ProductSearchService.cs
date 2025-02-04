@@ -71,6 +71,8 @@ namespace ProductSearchApi.Services
 
             var filterQuery = String.Join(" AND ", filters);
 
+            Console.WriteLine(parameters.Page);
+
             return await client.SearchSingleIndexAsync<ProductSearchItem>(_algoliaSettings.Value.IndexName, new SearchParams(
                 new SearchParamsObject
                 {

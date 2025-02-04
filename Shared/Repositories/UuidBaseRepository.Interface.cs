@@ -11,8 +11,8 @@ namespace Shared.Repositories
         Task<EntityType> Create(EntityType entity);
         Task<IEnumerable<EntityType>> CreateRange(IEnumerable<EntityType> entities);
 
-        Task<EntityType> Update(EntityType entity);
-        Task<IEnumerable<EntityType>> UpdateRange(IEnumerable<EntityType> entities);
+        Task<EntityType> Update(EntityType entity, EntityType? oldEntity = null);
+        Task<IEnumerable<EntityType>> UpdateRange(IEnumerable<EntityType> entities, IDictionary<Guid, EntityType>? oldEntities = null);
 
         Task Delete(EntityType entity);
         Task DeleteRange(IEnumerable<EntityType> entities);

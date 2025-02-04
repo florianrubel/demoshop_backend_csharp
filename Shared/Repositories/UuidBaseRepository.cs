@@ -36,14 +36,14 @@ namespace Shared.Repositories
             return entityProxies;
         }
 
-        public virtual async Task<EntityType> Update(EntityType entity)
+        public virtual async Task<EntityType> Update(EntityType entity, EntityType? oldEntity = null)
         {
             _dbSet.Update(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
         }
 
-        public virtual async Task<IEnumerable<EntityType>> UpdateRange(IEnumerable<EntityType> entities)
+        public virtual async Task<IEnumerable<EntityType>> UpdateRange(IEnumerable<EntityType> entities, IDictionary<Guid, EntityType>? oldEntities = null)
         {
             _dbSet.UpdateRange(entities);
             await _dbContext.SaveChangesAsync();

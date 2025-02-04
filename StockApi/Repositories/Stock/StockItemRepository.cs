@@ -72,13 +72,13 @@ namespace StockApi.Repositories.Stock
             return pagedList;
         }
 
-        public override async Task<StockItem> Update(StockItem entity)
+        public override async Task<StockItem> Update(StockItem entity, StockItem? oldEntity)
         {
             await RecalculateProductVariantStockCache(entity.ProductVariantId);
             return await base.Update(entity);
         }
 
-        public override async Task<IEnumerable<StockItem>> UpdateRange(IEnumerable<StockItem> entities)
+        public override async Task<IEnumerable<StockItem>> UpdateRange(IEnumerable<StockItem> entities, IDictionary<Guid, StockItem>? oldEntities = null)
         {
             foreach (var entity in entities)
             {

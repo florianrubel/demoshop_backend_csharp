@@ -19,6 +19,7 @@ ProductCacheApi.Startup.Repositories.Register(builder);
 ProductCacheApi.Startup.Caches.Register(builder);
 Shared.Startup.Authentication.Register(builder);
 Shared.Startup.Controllers.Register(builder);
+ProductCacheApi.Startup.Hubs.Register(builder);
 Shared.Startup.OpenApi.Register(builder, meta);
 Shared.Startup.AutoMapping.Register(builder);
 
@@ -28,6 +29,7 @@ Shared.Startup.Database<ReadOnlyDbContext>.PostBuild(app);
 Shared.Startup.OpenApi.PostBuild(app, meta);
 Shared.Startup.Cors.PostBuild(app);
 Shared.Startup.Controllers.PostBuild(app);
+ProductCacheApi.Startup.Hubs.PostBuild(app);
 Shared.Startup.Authentication.PostBuild(app);
 
 ProductCacheApi.Seeding.ProductCache.Seed(app).Wait();

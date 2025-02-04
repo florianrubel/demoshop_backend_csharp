@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using OpenAI.Chat;
-using PimApi.Repositories.Products;
+using SharedProducts.Repositories.Write.Products;
 using Shared.Models.Api;
 using SharedProducts.Entities.Products;
 using SharedProducts.Models.Products.Product;
