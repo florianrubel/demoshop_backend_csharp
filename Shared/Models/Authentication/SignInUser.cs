@@ -1,7 +1,7 @@
 ﻿using Shared.Constants;
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthApi.Models.Authentication
+namespace Shared.Models.Authentication
 {
     public class SignInUser
     {

@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedPropertyValueCache", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyValueCacheApi", "PropertyValueCacheApi\PropertyValueCacheApi.csproj", "{E3CEFADC-18CD-43C6-BD14-582876949B83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductCacheApi", "ProductCacheApi\ProductCacheApi.csproj", "{2D7458D6-8B2E-4AE0-8C25-C676899F9679}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{E3CEFADC-18CD-43C6-BD14-582876949B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3CEFADC-18CD-43C6-BD14-582876949B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3CEFADC-18CD-43C6-BD14-582876949B83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7458D6-8B2E-4AE0-8C25-C676899F9679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7458D6-8B2E-4AE0-8C25-C676899F9679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7458D6-8B2E-4AE0-8C25-C676899F9679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7458D6-8B2E-4AE0-8C25-C676899F9679}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

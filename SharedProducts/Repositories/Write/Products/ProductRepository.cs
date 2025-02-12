@@ -1,8 +1,9 @@
-﻿using SharedProducts.DbContexts;
-using SharedProducts.Entities.Products;
-using Shared.Constants;
+﻿using Shared.Constants;
 using Shared.Helpers;
 using Shared.Models.Api;
+using SharedProducts.DbContexts;
+using SharedProducts.Entities.Products;
+using SharedProducts.Services.ProductCache;
 
 namespace SharedProducts.Repositories.Write.Products
 {
@@ -10,7 +11,30 @@ namespace SharedProducts.Repositories.Write.Products
         : Shared.Repositories.UuidBaseRepository<MainDbContext, Product, SearchParameters>
         , IProductRepository<Product, SearchParameters>
     {
-        public ProductRepository(MainDbContext context) : base(context) {}
+        private readonly IProductCacheService _productCacheService;
+
+        public ProductRepository(MainDbContext context, IProductCacheService productCacheService) : base(context)
+        {
+            _productCacheService = productCacheService;
+        }
+
+        public async override Task<Product> Create(Product entity)
+        {
+            var result = await base.Create(entity);
+
+            _productCacheService.BuildByProductVariants(new List<Guid> { result.Id });
+
+            return result;
+        }
+
+        public async override Task<IEnumerable<Product>> CreateRange(IEnumerable<Product> entities)
+        {
+            var result = await base.CreateRange(entities);
+
+            _productCacheService.BuildByProductVariants(from entity in result select entity.Id);
+
+            return result;
+        }
 
         public async override Task<PagedList<Product>> GetMultiple(SearchParameters parameters)
         {
@@ -28,6 +52,24 @@ namespace SharedProducts.Repositories.Write.Products
             var pagedList = await PagedList<Product>.Create(collection, parameters.Page, parameters.PageSize);
 
             return pagedList;
+        }
+
+        public async override Task<Product> Update(Product entity, Product? oldEntity = null)
+        {
+            var result = await base.Update(entity, oldEntity);
+
+            _productCacheService.BuildByProductVariants(new List<Guid> { result.Id });
+
+            return result;
+        }
+
+        public async override Task<IEnumerable<Product>> UpdateRange(IEnumerable<Product> entities, IDictionary<Guid, Product>? oldEntities = null)
+        {
+            var result = await base.UpdateRange(entities, oldEntities);
+
+            _productCacheService.BuildByProductVariants(from entity in result select entity.Id);
+
+            return result;
         }
     }
 }

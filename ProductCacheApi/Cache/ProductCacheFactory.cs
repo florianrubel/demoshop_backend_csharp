@@ -13,6 +13,7 @@ using SharedProducts.Models.Products.ProductVariantStringProperty;
 using SharedProducts.Models.Search;
 using Microsoft.AspNetCore.SignalR;
 using ProductCacheApi.Hubs;
+using ProductCacheApi.Models.Hubs.ProductCache;
 
 namespace ProductCacheApi.Cache
 {
@@ -395,11 +396,10 @@ namespace ProductCacheApi.Cache
                 items.Clear();
 
                 counter++;
-
-                await _hubContext.Clients.All.SendAsync("cache-progress", new
+                await _hubContext.Clients.All.SendAsync("cache-progress", new CacheProgress
                 {
-                    current = counter,
-                    count = products.Count()
+                    Current = counter,
+                    Count = products.Count()
                 });
                 Console.WriteLine($"{counter} / {products.Count()} / {Math.Round((double)(counter * 100 / products.Count()))}");
             }

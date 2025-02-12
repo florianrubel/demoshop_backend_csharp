@@ -1,5 +1,5 @@
 ﻿using AuthApi.Entities.Identity;
-using AuthApi.Models.Authentication;
+using Shared.Models.Authentication;
 
 namespace AuthApi.Services.Authentication
 {

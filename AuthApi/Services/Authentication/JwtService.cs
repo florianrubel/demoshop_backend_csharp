@@ -1,5 +1,4 @@
 ﻿using AuthApi.Entities.Identity;
-using AuthApi.Models.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Models.Authentication;

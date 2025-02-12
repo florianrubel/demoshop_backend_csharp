@@ -11,6 +11,7 @@ using System.Text.Json;
 using AutoMapper;
 using SharedProducts.Profiles.Products.Properties;
 using SharedProducts.Profiles.Products;
+using SharedProducts.Services.ProductCache;
 
 namespace PimApi.Seeding.Products
 {
@@ -90,6 +91,8 @@ namespace PimApi.Seeding.Products
                 var productVariantBooleanPropertyRepository = scope.ServiceProvider.GetService<IProductVariantBooleanPropertyRepository<ProductVariantBooleanProperty, ProductVariantBooleanPropertyPaginationParameters>>();
                 var productVariantNumericPropertyRepository = scope.ServiceProvider.GetService<IProductVariantNumericPropertyRepository<ProductVariantNumericProperty, ProductVariantNumericPropertyPaginationParameters>>();
                 var productVariantStringPropertyRepository = scope.ServiceProvider.GetService<IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>>();
+
+                var productCacheService = scope.ServiceProvider.GetService<IProductCacheService>();
 
                 var products = await productRepository.GetMultiple(new SearchParameters { PageSize = -1 });
                 var booleanProperties = await booleanPropertyRepository.GetMultiple(new SearchParameters { PageSize = -1 });
@@ -251,6 +254,10 @@ namespace PimApi.Seeding.Products
                     File.WriteAllText(CACHE_FILENAME_PRODUCTVARIANT_STRINGPROPERTIES, wJsonString);
                 }
                 Console.WriteLine("Product Variants seeded");
+
+                Console.WriteLine("Caching Products");
+                await productCacheService.BuildCache();
+                Console.WriteLine("Products Cached");
             }
         }
     }

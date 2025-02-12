@@ -1,4 +1,5 @@
-﻿using SharedPropertyValueCache.Services;
+﻿using SharedProducts.Services.ProductCache;
+using SharedPropertyValueCache.Services;
 
 namespace PimApi.Startup
 {
@@ -7,7 +8,8 @@ namespace PimApi.Startup
         public static void Register(WebApplicationBuilder builder)
         {
             builder.Services
-                .AddScoped<IPropertyValueCacheService, PropertyValueCacheService>();
+                .AddScoped<IPropertyValueCacheService, PropertyValueCacheService>()
+                .AddScoped<IProductCacheService, ProductCacheService>();
         }
     }
 }

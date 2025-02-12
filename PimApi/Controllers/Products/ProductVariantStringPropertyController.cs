@@ -2,35 +2,23 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using SharedProducts.Repositories.Write.Products;
 using Shared.Controllers;
 using SharedProducts.Entities.Products;
 using SharedProducts.Models.Products.ProductVariantStringProperty;
+using SharedProducts.Repositories.Write.Products;
 using System.Text.Json;
-using PimApi.Cache;
-using SharedProducts.Models.Products.ProductVariantNumericProperty;
 
 namespace PimApi.Controllers.Products
 {
     [Route("product-variant-string-properties")]
     [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class ProductVariantStringPropertyController : AbstractWithDeleteProductCacheController<ProductVariantStringProperty, ViewProductVariantStringProperty, CreateProductVariantStringProperty, PatchProductVariantStringProperty, ProductVariantStringPropertySearchParameters>
+    public class ProductVariantStringPropertyController : WithDeleteDefaultControllerTemplate<ProductVariantStringProperty, ViewProductVariantStringProperty, CreateProductVariantStringProperty, PatchProductVariantStringProperty, ProductVariantStringPropertySearchParameters>
     {
         public ProductVariantStringPropertyController(
             IMapper mapper,
-            IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters> repository,
-            IProductCacheFactory productCacheFactory
-        ) : base(mapper, repository, productCacheFactory)
+            IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters> repository
+        ) : base(mapper, repository)
         { }
-
-        public async override Task<ActionResult<IEnumerable<ViewProductVariantStringProperty>>> Create([FromBody] IEnumerable<CreateProductVariantStringProperty> createObjs)
-        {
-            var result = await base.Create(createObjs);
-
-            _productCacheFactory.BuildByProductVariantNumericProperties(from record in result.Value select record.Id);
-
-            return result;
-        }
 
         [HttpPatch]
         [Route("")]
@@ -58,10 +46,6 @@ namespace PimApi.Controllers.Products
                 _mapper.Map(patchObj, entity);
                 await _repository.Update(entity, oldEntity);
                 results.Add(id, _mapper.Map<ViewProductVariantStringProperty>(entity));
-
-
-
-                _productCacheFactory.BuildByProductVariantNumericProperties(results.Keys);
             }
 
             return Ok(results);

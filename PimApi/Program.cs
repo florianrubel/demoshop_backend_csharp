@@ -13,11 +13,10 @@ var meta = new OpenApiMeta
     UriTerms = ""
 };
 
-PimApi.Startup.Configurations.Register(builder);
+Shared.Startup.Configurations.Register(builder);
 Shared.Startup.Database<MainDbContext>.Register(builder, assemblyName);
 PimApi.Startup.Services.Register(builder);
 PimApi.Startup.Repositories.Register(builder);
-PimApi.Startup.Caches.Register(builder);
 Shared.Startup.Authentication.Register(builder);
 Shared.Startup.Controllers.Register(builder);
 Shared.Startup.OpenApi.Register(builder, meta);
@@ -35,12 +34,5 @@ PimApi.Seeding.Products.Properties.NumericProperties.Seed(app).Wait();
 PimApi.Seeding.Products.Properties.StringProperties.Seed(app).Wait();
 PimApi.Seeding.Products.Products.Seed(app).Wait();
 PimApi.Seeding.Products.ProductVariants.Seed(app).Wait();
-PimApi.Seeding.ProductCache.Seed(app).Wait();
-
-var lifetime = app.Lifetime;
-lifetime.ApplicationStopping.Register(() =>
-{
-    PimApi.Seeding.ProductCache.UnSeed(app).Wait();
-});
 
 app.Run();

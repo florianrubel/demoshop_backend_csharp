@@ -5,6 +5,7 @@ using Shared.StaticServices;
 using SharedProducts.DbContexts;
 using SharedProducts.Entities.Products;
 using SharedProducts.Models.Products.ProductVariantStringProperty;
+using SharedProducts.Services.ProductCache;
 using SharedPropertyValueCache.Services;
 
 namespace SharedProducts.Repositories.Write.Products
@@ -14,13 +15,16 @@ namespace SharedProducts.Repositories.Write.Products
         , IProductVariantStringPropertyRepository<ProductVariantStringProperty, ProductVariantStringPropertySearchParameters>
     {
         private readonly IPropertyValueCacheService _propertyValueCacheService;
+        private readonly IProductCacheService _productCacheService;
 
         public ProductVariantStringPropertyRepository(
             MainDbContext context,
-            IPropertyValueCacheService propertyValueCacheService
+            IPropertyValueCacheService propertyValueCacheService,
+            IProductCacheService productCacheService
         ) : base(context)
         {
-            this._propertyValueCacheService = propertyValueCacheService;
+            _propertyValueCacheService = propertyValueCacheService;
+            _productCacheService = productCacheService;
         }
 
         public async override Task<ProductVariantStringProperty> Create(ProductVariantStringProperty entity)
@@ -34,7 +38,8 @@ namespace SharedProducts.Repositories.Write.Products
                 values.Add(entity.Value);
             }
 
-            await _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
+            _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
+            _productCacheService.BuildByProductVariantStringProperties(new List<Guid> { result.Id });
 
             return result;
         }
@@ -52,8 +57,9 @@ namespace SharedProducts.Repositories.Write.Products
                     values.Add(entity.Value);
                 }
 
-                await _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
+                _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
             }
+            _productCacheService.BuildByProductVariantStringProperties(from entity in result select entity.Id);
 
             return result;
         }
@@ -77,6 +83,7 @@ namespace SharedProducts.Repositories.Write.Products
                     await _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, cleanedValues);
                 }
             }
+            _productCacheService.BuildByProductVariants(new List<Guid> { entity.ProductVariantId });
         }
 
         public async override Task DeleteRange(IEnumerable<ProductVariantStringProperty> entities)
@@ -101,6 +108,7 @@ namespace SharedProducts.Repositories.Write.Products
                     }
                 }
             }
+            _productCacheService.BuildByProductVariants((from entity in entities select entity.ProductVariantId).Distinct());
         }
 
         public async override Task<PagedList<ProductVariantStringProperty>> GetMultiple(ProductVariantStringPropertySearchParameters parameters)
@@ -169,7 +177,8 @@ namespace SharedProducts.Repositories.Write.Products
                 values.Add(entity.Value);
             }
 
-            await _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
+            _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
+            _productCacheService.BuildByProductVariantStringProperties(new List<Guid> { result.Id });
 
             return result;
         }
@@ -201,8 +210,9 @@ namespace SharedProducts.Repositories.Write.Products
                     values.Add(entity.Value);
                 }
 
-                await _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
+                _propertyValueCacheService.SetValuesForProperty(entity.PropertyId, values);
             }
+            _productCacheService.BuildByProductVariantBooleanProperties(from entity in entities select entity.Id);
 
             return result;
         }

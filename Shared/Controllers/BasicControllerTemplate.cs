@@ -28,5 +28,17 @@ namespace Shared.Controllers
         {
             return (from claim in HttpContext.User.Claims where claim.Type == JwtRegisteredClaimNames.Sub select claim.Value).FirstOrDefault();
         }
+
+        protected virtual string? GetUserToken()
+        {
+            string authorizationHeader = Request.Headers["Authorization"];
+
+            if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Bearer "))
+            {
+                return null;
+            }
+
+            return authorizationHeader.Substring("Bearer ".Length).Trim();
+        }
     }
 }

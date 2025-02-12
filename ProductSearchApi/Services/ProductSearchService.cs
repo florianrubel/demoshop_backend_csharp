@@ -21,9 +21,9 @@ namespace ProductSearchApi.Services
 
             var filters = new List<string>();
 
-            if (parameters.StringFacets != null)
+            if (parameters.StringFilters != null)
             {
-                foreach (var stringFacet in parameters.StringFacets)
+                foreach (var stringFacet in parameters.StringFilters)
                 {
                     var values = stringFacet.Value;
                     var facetFilters = new List<string>();
@@ -43,17 +43,32 @@ namespace ProductSearchApi.Services
                 }
             }
 
-            if (parameters.BooleanFacets != null)
+            if (parameters.BooleanFilters != null)
             {
-                foreach (var booleanFacet in parameters.BooleanFacets)
+                foreach (var booleanFacet in parameters.BooleanFilters)
                 {
-                    var value = booleanFacet.Value;
-                    filters.Add($"booleanProperties.{booleanFacet.Key}:{value}");
+                    var values = booleanFacet.Value;
+                    var facetFilters = new List<string>();
+
+                    if (values != null && values.Count > 0)
+                    {
+                        foreach (var value in values)
+                        {
+                            var key = booleanFacet.Key;
+                            var strValue = value.ToString().ToLower();
+                            facetFilters.Add($"booleanProperties.{key}:{strValue}");
+                        }
+                    }
+
+                    if (facetFilters.Count > 0)
+                    {
+                        filters.Add($"({String.Join(" OR ", facetFilters)})");
+                    }
                 }
             }
 
-            if (parameters.NumericFacets != null) {
-                foreach (var numericFacet in parameters.NumericFacets)
+            if (parameters.NumericFilters != null) {
+                foreach (var numericFacet in parameters.NumericFilters)
                 {
                     var rangeFilters = new List<string>();
                     var range = numericFacet.Value;
@@ -65,7 +80,9 @@ namespace ProductSearchApi.Services
                     {
                         rangeFilters.Add($"numericProperties.{numericFacet.Key}<={range.Max}");
                     }
-                    filters.Add($"({String.Join(" AND ", rangeFilters)})");
+                    if (rangeFilters.Count > 0) {
+                        filters.Add($"({String.Join(" AND ", rangeFilters)})");
+                    }
                 }
             }
 

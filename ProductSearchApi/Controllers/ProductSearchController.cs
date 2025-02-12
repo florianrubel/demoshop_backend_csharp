@@ -31,9 +31,25 @@ namespace ProductSearchApi.Controllers
 
             var searchResult = new ProductSearchResult
             {
-                Products = result.Hits
+                Products = result.Hits,
+                BooleanFilters = parameters.BooleanFilters,
+                NumericFilters = parameters.NumericFilters,
+                StringFilters = parameters.StringFilters,
             };
             var priceRange = result.FacetsStats != null ? result.FacetsStats["priceInCents"] ?? null : null;
+
+            foreach (var facetStat in result.FacetsStats)
+            {
+                if (facetStat.Key.StartsWith("numericProperties."))
+                {
+                    var property = facetStat.Key.Replace("numericProperties.", "");
+                    searchResult.NumericFacetsRanges.Add(property, new NumericRange
+                    {
+                        Min =  Convert.ToInt32(facetStat.Value.Min),
+                        Max = Convert.ToInt32(facetStat.Value.Max),
+                    });
+                }
+            }
 
             foreach (var facet in result.Facets)
             {

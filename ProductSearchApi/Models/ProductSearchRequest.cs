@@ -13,10 +13,10 @@ namespace ProductSearchApi.Models
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string? SearchQuery { get; set; }
 
-        public Dictionary<string, List<string>>? StringFacets { get; set; } = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<string>>? StringFilters { get; set; } = new Dictionary<string, List<string>>();
 
-        public Dictionary<string, NumericRange>? NumericFacets { get; set; } = new Dictionary<string, NumericRange>();
+        public Dictionary<string, NumericRange>? NumericFilters { get; set; } = new Dictionary<string, NumericRange>();
 
-        public Dictionary<string, bool>? BooleanFacets { get; set; } = new Dictionary<string, bool>();
+        public Dictionary<string, List<bool>>? BooleanFilters { get; set; } = new Dictionary<string, List<bool>>();
     }
 }

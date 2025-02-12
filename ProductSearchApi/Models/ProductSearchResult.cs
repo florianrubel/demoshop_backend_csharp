@@ -12,6 +12,14 @@ namespace ProductSearchApi.Models
 
         public NumericRange PriceInCents { get; set; } = new NumericRange();
 
+        public Dictionary<string, NumericRange> NumericFacetsRanges { get; set; } = new Dictionary<string, NumericRange>();
+
         public List<ProductSearchItem> Products { get; set; }
+
+        public Dictionary<string, List<string>>? StringFilters{ get; set; } = new Dictionary<string, List<string>>();
+
+        public Dictionary<string, NumericRange>? NumericFilters { get; set; } = new Dictionary<string, NumericRange>();
+
+        public Dictionary<string, List<bool>>? BooleanFilters { get; set; } = new Dictionary<string, List<bool>>();
     }
 }
