@@ -1,4 +1,4 @@
-using Shared.Models.OpenApi;
+using LibUniversal.Models.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,16 +14,16 @@ var meta = new OpenApiMeta
 
 CdnApi.Startup.Configurations.Register(builder);
 CdnApi.Startup.Services.Register(builder);
-Shared.Startup.Authentication.Register(builder);
-Shared.Startup.Controllers.Register(builder);
-Shared.Startup.OpenApi.Register(builder, meta);
-Shared.Startup.AutoMapping.Register(builder);
+LibUniversal.Startup.Authentication.Register(builder);
+LibUniversal.Startup.Controllers.Register(builder);
+LibUniversal.Startup.OpenApi.Register(builder, meta);
+LibUniversal.Startup.AutoMapping.Register(builder);
 
 var app = builder.Build();
 
-Shared.Startup.OpenApi.PostBuild(app, meta);
-Shared.Startup.Cors.PostBuild(app);
-Shared.Startup.Controllers.PostBuild(app);
-Shared.Startup.Authentication.PostBuild(app);
+LibUniversal.Startup.OpenApi.PostBuild(app, meta);
+LibUniversal.Startup.Cors.PostBuild(app);
+LibUniversal.Startup.Controllers.PostBuild(app);
+LibUniversal.Startup.Authentication.PostBuild(app);
 
 app.Run();

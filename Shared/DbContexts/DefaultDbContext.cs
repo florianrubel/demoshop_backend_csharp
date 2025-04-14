@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shared.Entities;
+using LibUniversal.Entities;
 
-namespace Shared.DbContexts
+namespace LibDb.DbContexts
 {
     public class DefaultDbContext<DbContextType> : DbContext
         where DbContextType : DbContext

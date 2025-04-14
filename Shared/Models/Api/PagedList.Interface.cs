@@ -1,4 +1,4 @@
-﻿namespace Shared.Models.Api
+﻿namespace LibDb.Models.Api
 {
     public interface IPagedList
     {

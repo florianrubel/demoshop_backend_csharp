@@ -1,7 +1,7 @@
 ﻿using AuthApi.Entities.Identity;
+using LibUniversal.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Shared.Entities;
 
 namespace AuthApi.DbContexts
 {

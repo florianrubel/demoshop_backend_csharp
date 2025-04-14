@@ -1,7 +1,8 @@
-﻿using Shared.Entities;
-using Shared.Models.Api;
+﻿using LibDb.Models.Api;
+using LibUniversal.Entities;
+using LibUniversal.Models.Api;
 
-namespace Shared.Repositories
+namespace LibDb.Repositories
 {
     public interface IUuidReadOnlyRepository<EntityType, SearchParametersType>
         where EntityType : UuidBaseEntity

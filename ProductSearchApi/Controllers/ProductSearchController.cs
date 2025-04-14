@@ -1,7 +1,9 @@
+using Algolia.Search.Models.QuerySuggestions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductSearchApi.Models;
 using ProductSearchApi.Services;
+using Shared.Helpers;
 
 namespace ProductSearchApi.Controllers
 {
@@ -38,19 +40,6 @@ namespace ProductSearchApi.Controllers
             };
             var priceRange = result.FacetsStats != null ? result.FacetsStats["priceInCents"] ?? null : null;
 
-            foreach (var facetStat in result.FacetsStats)
-            {
-                if (facetStat.Key.StartsWith("numericProperties."))
-                {
-                    var property = facetStat.Key.Replace("numericProperties.", "");
-                    searchResult.NumericFacetsRanges.Add(property, new NumericRange
-                    {
-                        Min =  Convert.ToInt32(facetStat.Value.Min),
-                        Max = Convert.ToInt32(facetStat.Value.Max),
-                    });
-                }
-            }
-
             foreach (var facet in result.Facets)
             {
                 if (facet.Key.StartsWith("booleanProperties"))
@@ -64,6 +53,42 @@ namespace ProductSearchApi.Controllers
                 if (facet.Key.StartsWith("stringProperties"))
                 {
                     searchResult.StringFacets.Add(facet.Key.Replace("stringProperties.", ""), facet.Value);
+                }
+            }
+
+            foreach (var facetStat in result.FacetsStats)
+            {
+                if (facetStat.Key.StartsWith("numericProperties."))
+                {
+                    var property = facetStat.Key.Replace("numericProperties.", "");
+                    searchResult.NumericFacetsRanges.Add(property, new NumericRange
+                    {
+                        Min =  Convert.ToInt32(facetStat.Value.Min),
+                        Max = Convert.ToInt32(facetStat.Value.Max),
+                    });
+                }
+            }
+
+            foreach(var stringFilter in parameters.StringFilters)
+            {
+                var sRequest = parameters.Clone();
+                sRequest.StringFilters.Remove(stringFilter.Key);
+                var sResult = await _productSearchService.Search(sRequest);
+
+                foreach(var facet in sResult.Facets)
+                {
+                    var key = facet.Key.Replace("stringProperties.", "");
+                    if (stringFilter.Key == key)
+                    {
+                        if (searchResult.StringFacets.ContainsKey(key))
+                        {
+                            searchResult.StringFacets[key] = facet.Value;
+                        }
+                        else
+                        {
+                            searchResult.StringFacets.Add(key, facet.Value);
+                        }
+                    }
                 }
             }
 

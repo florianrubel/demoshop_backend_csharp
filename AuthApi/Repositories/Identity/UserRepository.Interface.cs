@@ -1,6 +1,7 @@
 ﻿using AuthApi.Entities.Identity;
+using LibDb.Models.Api;
+using LibUniversal.Models.Api;
 using Microsoft.AspNetCore.Identity;
-using Shared.Models.Api;
 
 namespace AuthApi.Repositories.Identity
 {

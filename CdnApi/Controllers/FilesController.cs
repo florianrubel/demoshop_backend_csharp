@@ -1,7 +1,7 @@
 using CdnApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Controllers;
+using LibUniversal.Controllers;
 
 namespace CdnApi.Controllers
 {

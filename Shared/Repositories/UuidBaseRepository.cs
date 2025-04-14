@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shared.Entities;
-using Shared.Models.Api;
+using LibUniversal.Entities;
+using LibUniversal.Models.Api;
 
-namespace Shared.Repositories
+namespace LibDb.Repositories
 {
     public abstract class UuidBaseRepository<DbContextType, EntityType, PaginationParametersType>
         : UuidReadOnlyRepository<DbContextType, EntityType, PaginationParametersType>
@@ -36,14 +36,14 @@ namespace Shared.Repositories
             return entityProxies;
         }
 
-        public virtual async Task<EntityType> Update(EntityType entity, EntityType? oldEntity = null)
+        public virtual async Task<EntityType> Update(EntityType entity, EntityType oldEntity)
         {
             _dbSet.Update(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
         }
 
-        public virtual async Task<IEnumerable<EntityType>> UpdateRange(IEnumerable<EntityType> entities, IDictionary<Guid, EntityType>? oldEntities = null)
+        public virtual async Task<IEnumerable<EntityType>> UpdateRange(IEnumerable<EntityType> entities, IEnumerable<EntityType> oldEntities)
         {
             _dbSet.UpdateRange(entities);
             await _dbContext.SaveChangesAsync();

@@ -1,7 +1,7 @@
 ﻿using AuthApi.Entities.Identity;
-using Shared.Models.Authentication;
 using AuthApi.Repositories.Identity;
 using AuthApi.Services.Authentication;
+using LibUniversal.Models.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

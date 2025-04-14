@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using LibUniversal.Models.Authentication;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -23,7 +23,7 @@ namespace AuthApi.Services.Authentication
             var tokenId = Guid.NewGuid().ToString();
             var userClaims = new List<Claim>
             {
-                new(Shared.Constants.Authentication.CLAIM_SCOPE, scope)
+                new(LibUniversal.Constants.Authentication.CLAIM_SCOPE, scope)
             };
             foreach (var role in roles)
             {

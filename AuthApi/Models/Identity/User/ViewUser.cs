@@ -1,8 +1,8 @@
-﻿using Shared.Models;
+﻿using LibUniversal.Models.Entities.UuidBaseEntity;
 
 namespace AuthApi.Models.Identity.User
 {
-    public class ViewUser : UuidViewModel
+    public class ViewUser : ViewUuidBaseEntity
     {
         public string? UserName { get; set; }
 
@@ -24,8 +24,6 @@ namespace AuthApi.Models.Identity.User
 
         public string? LastName { get; set; }
 
-        public DateTimeOffset CreatedAt { get; set; }
-
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public string Origin { get; set; }
     }
 }

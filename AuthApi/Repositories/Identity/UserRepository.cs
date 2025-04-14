@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using AuthApi.DbContexts;
 using AuthApi.Entities.Identity;
-using Shared.Models.Api;
-using Shared.Helpers;
-using Shared.Constants;
+using LibUniversal.Models.Api;
+using LibUniversal.Helpers;
+using LibDb.Models.Api;
+using LibUniversal.Constants;
 
 namespace AuthApi.Repositories.Identity
 {

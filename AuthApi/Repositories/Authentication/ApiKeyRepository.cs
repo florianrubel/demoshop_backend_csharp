@@ -1,12 +1,12 @@
 ﻿using AuthApi.DbContexts;
 using AuthApi.Entities.Authentication;
+using LibUniversal.Models.Api;
 using Microsoft.EntityFrameworkCore;
-using Shared.Models.Api;
 
 namespace AuthApi.Repositories.Authentication
 {
     public class ApiKeyRepository
-        : Shared.Repositories.UuidBaseRepository<MainDbContext, ApiKey, PaginationParameters>
+        : LibDb.Repositories.UuidBaseRepository<MainDbContext, ApiKey, PaginationParameters>
         , IApiKeyRepository<ApiKey, PaginationParameters>
     {
         public ApiKeyRepository(MainDbContext context) : base(context) { }

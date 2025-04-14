@@ -1,6 +1,8 @@
 ﻿using AuthApi.Entities.Identity;
+using AuthApi.Models.Identity.User;
 using AuthApi.Repositories.Identity;
 using Microsoft.AspNetCore.Identity;
+using System.Text.Json;
 
 namespace AuthApi.Seeding.Identity
 {
@@ -13,29 +15,23 @@ namespace AuthApi.Seeding.Identity
                 var roleManager = scope.ServiceProvider.GetService<RoleManager<Role>>();
                 var userRepository = scope.ServiceProvider.GetService<IUserRepository>();
 
-                var roleSuperadmin = await roleManager.FindByNameAsync(Shared.Constants.Identity.ROLE_SUPERADMIN);
-                var roleAdmin = await roleManager.FindByNameAsync(Shared.Constants.Identity.ROLE_ADMIN);
+                var roleSuperadmin = await roleManager.FindByNameAsync(LibUniversal.Constants.Identity.ROLE_SUPERADMIN);
+                var roleAdmin = await roleManager.FindByNameAsync(LibUniversal.Constants.Identity.ROLE_ADMIN);
 
                 if (roleSuperadmin == null || roleAdmin == null)
                 {
                     throw new Exception("Roles not seeded.");
                 }
 
+                var superadminSeed = JsonSerializer.Deserialize<SuperAdminSeed>(app.Configuration.GetSection("Superadmin").ToString() ?? "");
+
                 var superadmin = await CreateUser(
                     userRepository,
-                    "superadmin@example.org",
-                    "Superadmin123!",
+                    superadminSeed.Email,
+                    superadminSeed.Password,
                     new List<Role>() { roleSuperadmin, roleAdmin }
                 );
                 await userRepository.AssignUserToRole(superadmin, roleSuperadmin);
-                await userRepository.AssignUserToRole(superadmin, roleAdmin);
-                var admin = await CreateUser(
-                    userRepository,
-                    "admin@example.org",
-                    "Admin123!",
-                    new List<Role>() { roleAdmin }
-                );
-                await userRepository.AssignUserToRole(admin, roleAdmin);
             }
         }
 

@@ -7,7 +7,7 @@
         {
             var raw = "abcdefghijklmnopqrstuvwxyz1234567890.-:";
 
-            var hash = Shared.StaticServices.TextService.GetHash(raw);
+            var hash = LibUniversal.StaticServices.TextService.GetHash(raw);
 
             Assert.Equal(64, hash.Length);
         }
@@ -17,7 +17,7 @@
         {
             var raw = "4abf7ecd-07f2-4b5c-8f9c-1d98ff8e7be7,b2f3da27-4c18-4d2b-9557-117062eedb3b";
 
-            var guids = Shared.StaticServices.TextService.GetGuidArray(raw);
+            var guids = LibUniversal.StaticServices.TextService.GetGuidArray(raw);
 
             Assert.NotNull(guids);
             Assert.Equal(2, guids.Length);

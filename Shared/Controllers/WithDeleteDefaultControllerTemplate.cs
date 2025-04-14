@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
+using LibDb.Repositories;
+using LibUniversal.Entities;
+using LibUniversal.Models.Api;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Entities;
-using Shared.Models.Api;
-using Shared.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Shared.Controllers
+namespace LibDb.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]

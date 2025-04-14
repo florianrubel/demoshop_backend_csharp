@@ -1,5 +1,5 @@
-﻿using Shared.Entities;
-using Shared.Helpers;
+﻿using LibUniversal.Entities;
+using LibUniversal.Helpers;
 
 namespace TestShared.Helpers
 {

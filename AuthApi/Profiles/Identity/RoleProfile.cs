@@ -1,10 +1,10 @@
 ﻿using AuthApi.Entities.Identity;
 using AuthApi.Models.Identity.Role;
-using AutoMapper;
+using LibUniversal.Profiles;
 
 namespace AuthApi.Profiles.Identity
 {
-    public class RoleProfile : Profile
+    public class RoleProfile : DefaultProfile<Role, ViewRole, CreateRole, PatchRole>
     {
         public RoleProfile()
         {

@@ -3,18 +3,19 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
-namespace Shared.Startup
+namespace LibDb.Startup
 {
     public static class Database<DbContextType>
         where DbContextType : DbContext
     {
         public static void Register(WebApplicationBuilder builder, string assemblyName)
         {
-            var test = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<DbContextType>(options =>
             {
+                var version = ServerVersion.AutoDetect(connectionString);
                 options
-                    .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), options =>
+                    .UseMySql(connectionString, version, options =>
                     {
                         options.MigrationsAssembly(assemblyName);
                     })

@@ -1,15 +1,11 @@
-﻿using Shared.Models;
+﻿using LibUniversal.Models.Entities.UuidBaseEntity;
 
 namespace AuthApi.Models.Identity.Role
 {
-    public class ViewRole : UuidViewModel
+    public class ViewRole : ViewUuidBaseEntity
     {
         public string Name { get; set; }
 
         public string NormalizedName { get; set; }
-
-        public DateTimeOffset CreatedAt { get; set; }
-
-        public DateTimeOffset? UpdatedAt { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Moq;
-using Shared.Helpers;
+using LibUniversal.Helpers;
 
 namespace TestShared.Helpers
 {

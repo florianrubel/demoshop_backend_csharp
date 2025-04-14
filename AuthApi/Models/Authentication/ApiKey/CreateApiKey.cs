@@ -1,4 +1,4 @@
-﻿using Shared.Constants;
+﻿using LibUniversal.Constants;
 using System.ComponentModel.DataAnnotations;
 
 namespace AuthApi.Models.Authentication

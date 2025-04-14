@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shared.Entities;
-using Shared.Helpers;
-using Shared.Models.Api;
+using LibUniversal.Entities;
+using LibUniversal.Helpers;
+using LibUniversal.Models.Api;
+using LibDb.Models.Api;
 
-namespace Shared.Repositories
+namespace LibDb.Repositories
 {
     public abstract class UuidReadOnlyRepository<DbContextType, EntityType, PaginationParametersType> : IUuidReadOnlyRepository<EntityType, PaginationParametersType>
         where DbContextType : DbContext

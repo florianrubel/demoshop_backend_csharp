@@ -1,8 +1,8 @@
 ﻿using AuthApi.Entities.Identity;
+using LibUniversal.Models.Authentication;
+using LibUniversal.StaticServices;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Shared.Models.Authentication;
-using Shared.StaticServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -93,8 +93,8 @@ namespace AuthApi.Services.Authentication
             // in the database.
             if (accessIdentifier.Value != refreshSubject.Value) return false;
 
-            var accessDeviceId = accessSecurityToken.Claims.Where(c => c.Type == Shared.Constants.Authentication.CLAIM_DEVICE_ID).FirstOrDefault();
-            var refreshDeviceId = refreshSecurityToken.Claims.Where(c => c.Type == Shared.Constants.Authentication.CLAIM_DEVICE_ID).FirstOrDefault();
+            var accessDeviceId = accessSecurityToken.Claims.Where(c => c.Type == LibUniversal.Constants.Authentication.CLAIM_DEVICE_ID).FirstOrDefault();
+            var refreshDeviceId = refreshSecurityToken.Claims.Where(c => c.Type == LibUniversal.Constants.Authentication.CLAIM_DEVICE_ID).FirstOrDefault();
 
             // If one of the claims is missing, the token was invalid.
             if (accessDeviceId == null || refreshDeviceId == null) return false;
@@ -145,7 +145,7 @@ namespace AuthApi.Services.Authentication
             {
                 new(JwtRegisteredClaimNames.Jti, identifier),
                 new(JwtRegisteredClaimNames.Sub, subject),
-                new(Shared.Constants.Authentication.CLAIM_DEVICE_ID, TextService.GetHash(ipAddress))
+                new(LibUniversal.Constants.Authentication.CLAIM_DEVICE_ID, TextService.GetHash(ipAddress))
             };
             if (additionalClaims != null) claims.AddRange(additionalClaims);
 

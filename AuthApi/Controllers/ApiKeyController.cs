@@ -3,18 +3,19 @@ using AuthApi.Models.Authentication;
 using AuthApi.Models.Authentication.ApiKey;
 using AuthApi.Repositories.Authentication;
 using AuthApi.Services.Authentication;
+using LibDb.Models.Api;
+using LibUniversal.Controllers;
+using LibUniversal.Helpers;
+using LibUniversal.Models.Api;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Controllers;
-using Shared.Helpers;
-using Shared.Models.Api;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace AuthApi.Controllers
 {
     [Route("api-key")]
-    [Authorize(Roles = Shared.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
-    public class ApiKeyController : BasicControllerTemplate
+    [Authorize(Roles = LibUniversal.Constants.Identity.AUTHORIZE_MIN_ADMIN)]
+    public class ApiKeyController : DbControllerTemplate
     {
         private readonly IApiKeyRepository<ApiKey, PaginationParameters> _apiKeyRepository;
 

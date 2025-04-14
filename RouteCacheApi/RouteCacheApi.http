@@ -1,0 +1,6 @@
+@RouteCacheApi_HostAddress = http://localhost:5234
+
+GET {{RouteCacheApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

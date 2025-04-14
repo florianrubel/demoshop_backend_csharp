@@ -13,7 +13,7 @@ namespace AuthApi.Seeding.Identity
 
                 var roleManager = scope.ServiceProvider.GetService<RoleManager<Role>>();
 
-                foreach (var roleName in Shared.Constants.Identity.ROLES)
+                foreach (var roleName in LibUniversal.Constants.Identity.ROLES)
                 {
                     if (await roleManager.FindByNameAsync(roleName) == null)
                     {

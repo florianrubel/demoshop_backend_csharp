@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Shared.Models.Api
+namespace LibDb.Models.Api
 {
     public class PagedList<T> : List<T>, IPagedList
     {

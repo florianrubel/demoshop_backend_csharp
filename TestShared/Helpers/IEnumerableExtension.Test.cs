@@ -1,4 +1,4 @@
-﻿using Shared.Helpers;
+﻿using LibUniversal.Helpers;
 using TestShared.Models.Helpers;
 
 namespace TestShared.Helpers

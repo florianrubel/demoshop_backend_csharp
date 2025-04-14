@@ -33,7 +33,7 @@ namespace AuthApi.Startup
                 options.SignIn.RequireConfirmedEmail = true;
             });
 
-            Shared.Startup.Authentication.Register(builder);
+            LibUniversal.Startup.Authentication.Register(builder);
         }
     }
 }

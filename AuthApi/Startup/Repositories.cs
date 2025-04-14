@@ -1,7 +1,7 @@
 ﻿using AuthApi.Entities.Authentication;
 using AuthApi.Repositories.Authentication;
 using AuthApi.Repositories.Identity;
-using Shared.Models.Api;
+using LibUniversal.Models.Api;
 
 namespace AuthApi.Startup
 {

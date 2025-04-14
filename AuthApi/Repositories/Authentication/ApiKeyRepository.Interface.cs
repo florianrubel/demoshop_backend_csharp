@@ -1,6 +1,6 @@
 ﻿using AuthApi.Entities.Authentication;
-using Shared.Models.Api;
-using Shared.Repositories;
+using LibDb.Repositories;
+using LibUniversal.Models.Api;
 
 namespace AuthApi.Repositories.Authentication
 {

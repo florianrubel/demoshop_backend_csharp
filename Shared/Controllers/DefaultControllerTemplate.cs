@@ -1,19 +1,22 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using LibDb.Models.Api;
+using LibDb.Repositories;
+using LibUniversal.Constants;
+using LibUniversal.Controllers;
+using LibUniversal.Entities;
+using LibUniversal.Helpers;
+using LibUniversal.Models.Api;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Shared.Models.Api;
-using AutoMapper;
-using Shared.Repositories;
-using Shared.Entities;
 using Microsoft.AspNetCore.JsonPatch;
-using Shared.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Shared.Controllers
+namespace LibDb.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
-    public abstract class DefaultControllerTemplate<EntityType, ViewType, CreateType, PatchType, PaginationParametersType> : BasicControllerTemplate
+    public abstract class DefaultControllerTemplate<EntityType, ViewType, CreateType, PatchType, PaginationParametersType> : DbControllerTemplate
         where EntityType : UuidBaseEntity
         where PatchType : class
         where PaginationParametersType : PaginationParameters
@@ -165,6 +168,9 @@ namespace Shared.Controllers
         {
             var results = new Dictionary<Guid, ViewType>();
 
+            var entities = new List<EntityType>();
+            var oldEntities = new List<EntityType>();
+
             foreach (KeyValuePair<Guid, JsonPatchDocument<PatchType>> pair in patchDocuments)
             {
                 var id = pair.Key;
@@ -180,10 +186,15 @@ namespace Shared.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-
+                oldEntities.Add(entity.Clone());
                 _mapper.Map(patchObj, entity);
-                await _repository.Update(entity);
-                results.Add(id, _mapper.Map<ViewType>(entity));
+                entities.Add(entity);
+            }
+            var resultsArr = await _repository.UpdateRange(entities, oldEntities);
+
+            foreach (var result in resultsArr)
+            {
+                results.Add(result.Id, _mapper.Map<ViewType>(result));
             }
 
             return Ok(results);

@@ -1,4 +1,4 @@
-﻿using Shared.Entities;
+﻿using LibUniversal.Entities;
 
 namespace AuthApi.Entities.Authentication
 {
